@@ -1,11 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:veloxorder/view/store/category_registration_screen.dart';
 import 'package:veloxorder/view/store/order_management_screen.dart';
 import 'package:veloxorder/view/store/transaction_registration_screen.dart';
 import 'package:veloxorder/view/store/menu_registration_screen.dart';
-// Todo import 'package:veloxorder/view/authorization_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:veloxorder/data/models/menu_item.dart';
+import 'package:veloxorder/data/models/menu_category.dart';
+import 'package:veloxorder/viewmodel/store/menu_viewmodel.dart';
 
-void main() {
-  runApp(VeloxOrderApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Hive の初期化
+  await Hive.initFlutter();
+
+  // アダプターの登録
+  Hive.registerAdapter(MenuItemAdapter());
+  Hive.registerAdapter(MenuCategoryAdapter());
+
+  // ボックスのオープン
+  await Hive.openBox<MenuCategory>('menuCategories');
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => MenuViewModel()),
+      ],
+      child: VeloxOrderApp(),
+    ),
+  );
 }
 
 class VeloxOrderApp extends StatelessWidget {
@@ -22,6 +46,7 @@ class VeloxOrderApp extends StatelessWidget {
         '/transactionRegistration': (context) =>
             TransactionRegistrationScreen(),
         '/menuRegistration': (context) => MenuRegistrationScreen(),
+        '/categoryRegistration': (context) => CategoryRegistrationScreen(),
       },
     );
   }
