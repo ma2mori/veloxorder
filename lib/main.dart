@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:veloxorder/data/models/menu_item.dart';
 import 'package:veloxorder/data/models/menu_category.dart';
+import 'package:veloxorder/viewmodel/store/category_viewmodel.dart';
 import 'package:veloxorder/viewmodel/store/menu_viewmodel.dart';
 
 void main() async {
@@ -26,6 +27,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => MenuViewModel()),
+        ChangeNotifierProvider(create: (_) => CategoryViewModel()),
       ],
       child: VeloxOrderApp(),
     ),

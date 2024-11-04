@@ -74,11 +74,15 @@ class _MenuRegistrationScreenState extends State<MenuRegistrationScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  '${selectedCategory!.category} のメニュー',
-                                  style: TextStyle(
+                                Expanded(
+                                  child: Text(
+                                    '${selectedCategory!.category}',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
                                       fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                                 IconButton(
                                   icon: Icon(Icons.add, size: 24),
@@ -108,7 +112,7 @@ class _MenuRegistrationScreenState extends State<MenuRegistrationScreen> {
                                     '価格: ¥${item.price}',
                                     style: TextStyle(fontSize: 12),
                                   ),
-                                  dense: true, // ListTile をコンパクトに
+                                  dense: true,
                                   trailing: _buildActionButtons(
                                     onEdit: () {
                                       _showEditMenuItemDialog(

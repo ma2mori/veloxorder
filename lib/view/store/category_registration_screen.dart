@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:veloxorder/data/models/menu_category.dart';
 import 'package:veloxorder/view/store/common_drawer.dart';
-import 'package:veloxorder/viewmodel/store/menu_viewmodel.dart';
+import 'package:veloxorder/viewmodel/store/category_viewmodel.dart';
 
 class CategoryRegistrationScreen extends StatelessWidget {
   @override
@@ -12,14 +12,14 @@ class CategoryRegistrationScreen extends StatelessWidget {
         title: Text('カテゴリー登録'),
       ),
       drawer: CommonDrawer(),
-      body: Consumer<MenuViewModel>(
-        builder: (context, menuViewModel, child) {
+      body: Consumer<CategoryViewModel>(
+        builder: (context, categoryViewModel, child) {
           return ListView.separated(
             padding: EdgeInsets.all(16.0),
-            itemCount: menuViewModel.menuCategories.length,
+            itemCount: categoryViewModel.categories.length,
             separatorBuilder: (context, index) => Divider(),
             itemBuilder: (context, index) {
-              var category = menuViewModel.menuCategories[index];
+              var category = categoryViewModel.categories[index];
               return ListTile(
                 title: Text(
                   category.category,
@@ -97,7 +97,7 @@ class CategoryRegistrationScreen extends StatelessWidget {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   if (categoryName != null) {
-                    Provider.of<MenuViewModel>(context, listen: false)
+                    Provider.of<CategoryViewModel>(context, listen: false)
                         .addCategory(categoryName!);
                   }
                   Navigator.of(context).pop();
@@ -150,7 +150,7 @@ class CategoryRegistrationScreen extends StatelessWidget {
                   _formKey.currentState!.save();
                   if (newCategoryName != null &&
                       newCategoryName != category.category) {
-                    Provider.of<MenuViewModel>(context, listen: false)
+                    Provider.of<CategoryViewModel>(context, listen: false)
                         .editCategory(category, newCategoryName!);
                   }
                   Navigator.of(context).pop();
@@ -183,7 +183,7 @@ class CategoryRegistrationScreen extends StatelessWidget {
               child: Text('削除'),
               onPressed: () {
                 try {
-                  Provider.of<MenuViewModel>(context, listen: false)
+                  Provider.of<CategoryViewModel>(context, listen: false)
                       .deleteCategory(category);
                   Navigator.of(context).pop();
                 } catch (e) {
