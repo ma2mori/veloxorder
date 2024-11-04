@@ -21,13 +21,13 @@ class MenuViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateMenuItem(
-      MenuItem item, String name, int price, String? imagePath, String? notes) {
+  void updateMenuItem(MenuCategory category, MenuItem item, String name,
+      int price, String? imagePath, String? notes) {
     item.name = name;
     item.price = price;
     item.imagePath = imagePath;
     item.notes = notes;
-    item.save();
+    category.save();
     notifyListeners();
   }
 
