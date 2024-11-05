@@ -27,7 +27,7 @@ class CommonDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.add),
+            leading: Icon(Icons.add_shopping_cart),
             title: Text('取引登録'),
             onTap: () {
               Navigator.pushReplacementNamed(
@@ -35,10 +35,17 @@ class CommonDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.menu),
+            leading: Icon(Icons.restaurant_menu),
             title: Text('メニュー登録'),
             onTap: () {
               Navigator.pushReplacementNamed(context, '/menuRegistration');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.category),
+            title: Text('カテゴリー登録'),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, '/categoryRegistration');
             },
           ),
           ListTile(
