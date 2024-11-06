@@ -23,9 +23,9 @@ class DeleteCategoryDialog extends StatelessWidget {
         ),
         ElevatedButton(
           child: Text('削除'),
-          onPressed: () {
+          onPressed: () async {
             try {
-              Provider.of<CategoryViewModel>(context, listen: false)
+              await Provider.of<CategoryViewModel>(context, listen: false)
                   .deleteCategory(category);
               Navigator.of(context).pop();
             } catch (e) {

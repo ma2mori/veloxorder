@@ -79,10 +79,11 @@ class AddMenuItemDialog extends StatelessWidget {
                 final newItem = MenuItem(
                   name: itemName!,
                   price: itemPrice!,
+                  categoryId: category.key as int,
                   notes: itemNotes,
                 );
                 Provider.of<MenuViewModel>(context, listen: false)
-                    .addMenuItem(category.category, newItem);
+                    .addMenuItem(newItem);
               }
               Navigator.of(context).pop();
             }

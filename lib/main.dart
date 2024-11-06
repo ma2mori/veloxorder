@@ -11,7 +11,7 @@ import 'package:veloxorder/domain/category/usecase/update_category_usecase.dart'
 import 'package:veloxorder/domain/category/usecase/delete_category_usecase.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
 import 'package:veloxorder/domain/menu/repository/menu_repository.dart';
-import 'package:veloxorder/domain/menu/usecase/get_menu_categories_usecase.dart';
+import 'package:veloxorder/domain/menu/usecase/get_menu_items_usecase.dart';
 import 'package:veloxorder/domain/menu/usecase/add_menu_item_usecase.dart';
 import 'package:veloxorder/domain/menu/usecase/update_menu_item_usecase.dart';
 import 'package:veloxorder/domain/menu/usecase/delete_menu_item_usecase.dart';
@@ -34,13 +34,15 @@ void main() async {
 
   // ボックスのオープン
   final menuCategoryBox = await Hive.openBox<MenuCategory>('menuCategories');
+  final menuItemBox = await Hive.openBox<MenuItem>('menuItems');
 
   // リポジトリの初期化
-  final menuRepository = MenuRepositoryImpl(menuCategoryBox);
-  final categoryRepository = CategoryRepositoryImpl(menuCategoryBox);
+  final menuRepository = MenuRepositoryImpl(menuItemBox);
+  final categoryRepository =
+      CategoryRepositoryImpl(menuCategoryBox, menuRepository);
 
   // ユースケースの初期化
-  final getMenuCategoriesUseCase = GetMenuCategoriesUseCase(menuRepository);
+  final getMenuItemsUseCase = GetMenuItemsUseCase(menuRepository);
   final addMenuItemUseCase = AddMenuItemUseCase(menuRepository);
   final updateMenuItemUseCase = UpdateMenuItemUseCase(menuRepository);
   final deleteMenuItemUseCase = DeleteMenuItemUseCase(menuRepository);
@@ -55,7 +57,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(
           create: (_) => MenuViewModel(
-            getMenuCategoriesUseCase: getMenuCategoriesUseCase,
+            getMenuItemsUseCase: getMenuItemsUseCase,
             addMenuItemUseCase: addMenuItemUseCase,
             updateMenuItemUseCase: updateMenuItemUseCase,
             deleteMenuItemUseCase: deleteMenuItemUseCase,

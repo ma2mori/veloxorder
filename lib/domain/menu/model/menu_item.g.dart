@@ -19,6 +19,7 @@ class MenuItemAdapter extends TypeAdapter<MenuItem> {
     return MenuItem(
       name: fields[0] as String,
       price: fields[1] as int,
+      categoryId: fields[4] as int,
       imagePath: fields[2] as String?,
       notes: fields[3] as String?,
     );
@@ -27,7 +28,7 @@ class MenuItemAdapter extends TypeAdapter<MenuItem> {
   @override
   void write(BinaryWriter writer, MenuItem obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class MenuItemAdapter extends TypeAdapter<MenuItem> {
       ..writeByte(2)
       ..write(obj.imagePath)
       ..writeByte(3)
-      ..write(obj.notes);
+      ..write(obj.notes)
+      ..writeByte(4)
+      ..write(obj.categoryId);
   }
 
   @override

@@ -84,7 +84,7 @@ class EditMenuItemDialog extends StatelessWidget {
                 item.price = itemPrice!;
                 item.notes = itemNotes;
                 Provider.of<MenuViewModel>(context, listen: false)
-                    .updateMenuItem(category, item);
+                    .updateMenuItem(item);
               }
               Navigator.of(context).pop();
             }

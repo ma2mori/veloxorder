@@ -18,18 +18,15 @@ class MenuCategoryAdapter extends TypeAdapter<MenuCategory> {
     };
     return MenuCategory(
       category: fields[0] as String,
-      items: (fields[1] as List).cast<MenuItem>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, MenuCategory obj) {
     writer
-      ..writeByte(2)
-      ..writeByte(0)
-      ..write(obj.category)
       ..writeByte(1)
-      ..write(obj.items);
+      ..writeByte(0)
+      ..write(obj.category);
   }
 
   @override

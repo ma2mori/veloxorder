@@ -6,7 +6,7 @@ class AddMenuItemUseCase {
 
   AddMenuItemUseCase(this.repository);
 
-  Future<void> call(String categoryName, MenuItem item) async {
-    await repository.addMenuItem(categoryName, item);
+  Future<void> call(MenuItem item) async {
+    await repository.addMenuItem(item);
   }
 }

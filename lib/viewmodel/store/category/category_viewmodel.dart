@@ -31,7 +31,7 @@ class CategoryViewModel extends ChangeNotifier {
   }
 
   Future<void> addCategory(String categoryName) async {
-    final newCategory = MenuCategory(category: categoryName, items: []);
+    final newCategory = MenuCategory(category: categoryName);
     await _addCategoryUseCase(newCategory);
     await fetchCategories();
   }

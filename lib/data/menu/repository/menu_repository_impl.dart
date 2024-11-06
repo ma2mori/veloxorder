@@ -1,36 +1,29 @@
 import 'package:veloxorder/domain/menu/repository/menu_repository.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
-import 'package:veloxorder/domain/category/model/menu_category.dart';
 import 'package:hive/hive.dart';
 
 class MenuRepositoryImpl implements MenuRepository {
-  final Box<MenuCategory> _menuBox;
+  final Box<MenuItem> _menuItemBox;
 
-  MenuRepositoryImpl(this._menuBox);
+  MenuRepositoryImpl(this._menuItemBox);
 
   @override
-  Future<List<MenuCategory>> getMenuCategories() async {
-    return _menuBox.values.toList();
+  Future<List<MenuItem>> getMenuItems() async {
+    return _menuItemBox.values.toList();
   }
 
   @override
-  Future<void> addMenuItem(String categoryName, MenuItem item) async {
-    final category = _menuBox.values.firstWhere(
-      (cat) => cat.category == categoryName,
-      orElse: () => throw Exception('Category not found'),
-    );
-    category.items.add(item);
-    await category.save();
+  Future<void> addMenuItem(MenuItem item) async {
+    await _menuItemBox.add(item);
   }
 
   @override
-  Future<void> updateMenuItem(MenuCategory category) async {
-    await category.save();
+  Future<void> updateMenuItem(MenuItem item) async {
+    await item.save();
   }
 
   @override
-  Future<void> deleteMenuItem(MenuCategory category, MenuItem item) async {
-    category.items.remove(item);
-    await category.save();
+  Future<void> deleteMenuItem(MenuItem item) async {
+    await item.delete();
   }
 }

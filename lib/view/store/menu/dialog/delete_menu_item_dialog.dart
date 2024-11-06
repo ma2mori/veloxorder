@@ -30,7 +30,7 @@ class DeleteMenuItemDialog extends StatelessWidget {
           child: Text('削除'),
           onPressed: () {
             Provider.of<MenuViewModel>(context, listen: false)
-                .deleteMenuItem(category, item);
+                .deleteMenuItem(item);
             Navigator.of(context).pop();
           },
         ),

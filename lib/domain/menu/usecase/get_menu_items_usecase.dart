@@ -1,12 +1,12 @@
 import 'package:veloxorder/domain/menu/repository/menu_repository.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
 
-class DeleteMenuItemUseCase {
+class GetMenuItemsUseCase {
   final MenuRepository repository;
 
-  DeleteMenuItemUseCase(this.repository);
+  GetMenuItemsUseCase(this.repository);
 
-  Future<void> call(MenuItem item) async {
-    await repository.deleteMenuItem(item);
+  Future<List<MenuItem>> call() async {
+    return await repository.getMenuItems();
   }
 }

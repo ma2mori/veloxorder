@@ -1,11 +1,14 @@
 import 'package:veloxorder/domain/category/repository/category_repository.dart';
 import 'package:veloxorder/domain/category/model/menu_category.dart';
+import 'package:veloxorder/domain/menu/repository/menu_repository.dart';
+import 'package:veloxorder/domain/menu/model/menu_item.dart';
 import 'package:hive/hive.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {
   final Box<MenuCategory> _categoryBox;
+  final MenuRepository _menuRepository;
 
-  CategoryRepositoryImpl(this._categoryBox);
+  CategoryRepositoryImpl(this._categoryBox, this._menuRepository);
 
   @override
   Future<List<MenuCategory>> getCategories() async {
@@ -24,9 +27,15 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
   @override
   Future<void> deleteCategory(MenuCategory category) async {
-    if (category.items.isNotEmpty) {
+    // カテゴリーに紐づくメニューアイテムが存在するかチェック
+    List<MenuItem> linkedItems = (await _menuRepository.getMenuItems())
+        .where((item) => item.categoryId == category.key as int)
+        .toList();
+
+    if (linkedItems.isNotEmpty) {
       throw Exception('カテゴリーにメニューアイテムが存在します。削除できません。');
     }
+
     await category.delete();
   }
 }

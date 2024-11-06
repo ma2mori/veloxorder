@@ -6,6 +6,7 @@ import 'package:veloxorder/view/store/menu/dialog/add_menu_item_dialog.dart';
 import 'package:veloxorder/view/store/menu/dialog/delete_menu_item_dialog.dart';
 import 'package:veloxorder/view/store/menu/dialog/edit_menu_item_dialog.dart';
 import 'package:veloxorder/viewmodel/store/menu/menu_viewmodel.dart';
+import 'package:veloxorder/viewmodel/store/category/category_viewmodel.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
 
 class MenuRegistrationScreen extends StatefulWidget {
@@ -23,8 +24,8 @@ class _MenuRegistrationScreenState extends State<MenuRegistrationScreen> {
         title: Text('メニュー登録'),
       ),
       drawer: CommonDrawer(),
-      body: Consumer<MenuViewModel>(
-        builder: (context, menuViewModel, child) {
+      body: Consumer2<MenuViewModel, CategoryViewModel>(
+        builder: (context, menuViewModel, categoryViewModel, child) {
           return Row(
             children: [
               // 左側: カテゴリ一覧
@@ -36,11 +37,11 @@ class _MenuRegistrationScreenState extends State<MenuRegistrationScreen> {
                     Expanded(
                       child: ListView.separated(
                         padding: EdgeInsets.symmetric(vertical: 4.0),
-                        itemCount: menuViewModel.menuCategories.length,
+                        itemCount: categoryViewModel.categories.length,
                         separatorBuilder: (context, index) =>
                             Divider(height: 1, color: Colors.grey),
                         itemBuilder: (context, index) {
-                          var category = menuViewModel.menuCategories[index];
+                          var category = categoryViewModel.categories[index];
                           bool isSelected = selectedCategory == category;
                           return ListTile(
                             title: Text(
@@ -100,11 +101,17 @@ class _MenuRegistrationScreenState extends State<MenuRegistrationScreen> {
                           Expanded(
                             child: ListView.separated(
                               padding: EdgeInsets.symmetric(vertical: 4.0),
-                              itemCount: selectedCategory!.items.length,
+                              itemCount: menuViewModel
+                                  .getMenuItemsByCategory(
+                                      selectedCategory!.key as int)
+                                  .length,
                               separatorBuilder: (context, index) =>
                                   Divider(height: 1, color: Colors.grey),
                               itemBuilder: (context, index) {
-                                var item = selectedCategory!.items[index];
+                                var items =
+                                    menuViewModel.getMenuItemsByCategory(
+                                        selectedCategory!.key as int);
+                                var item = items[index];
                                 return ListTile(
                                   title: Text(
                                     item.name,
