@@ -80,9 +80,11 @@ class EditMenuItemDialog extends StatelessWidget {
             if (_formKey.currentState!.validate()) {
               _formKey.currentState!.save();
               if (itemName != null && itemPrice != null) {
+                item.name = itemName!;
+                item.price = itemPrice!;
+                item.notes = itemNotes;
                 Provider.of<MenuViewModel>(context, listen: false)
-                    .updateMenuItem(category, item, itemName!, itemPrice!,
-                        item.imagePath, itemNotes);
+                    .updateMenuItem(category, item);
               }
               Navigator.of(context).pop();
             }

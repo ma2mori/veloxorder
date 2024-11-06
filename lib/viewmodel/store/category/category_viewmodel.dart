@@ -1,33 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:veloxorder/domain/category/model/menu_category.dart';
+import 'package:veloxorder/domain/category/usecase/get_categories_usecase.dart';
+import 'package:veloxorder/domain/category/usecase/add_category_usecase.dart';
+import 'package:veloxorder/domain/category/usecase/update_category_usecase.dart';
+import 'package:veloxorder/domain/category/usecase/delete_category_usecase.dart';
 
 class CategoryViewModel extends ChangeNotifier {
-  late Box<MenuCategory> _categoryBox;
+  final GetCategoriesUseCase _getCategoriesUseCase;
+  final AddCategoryUseCase _addCategoryUseCase;
+  final UpdateCategoryUseCase _updateCategoryUseCase;
+  final DeleteCategoryUseCase _deleteCategoryUseCase;
 
-  List<MenuCategory> get categories => _categoryBox.values.toList();
+  List<MenuCategory> categories = [];
 
-  CategoryViewModel() {
-    _categoryBox = Hive.box<MenuCategory>('menuCategories');
+  CategoryViewModel({
+    required GetCategoriesUseCase getCategoriesUseCase,
+    required AddCategoryUseCase addCategoryUseCase,
+    required UpdateCategoryUseCase updateCategoryUseCase,
+    required DeleteCategoryUseCase deleteCategoryUseCase,
+  })  : _getCategoriesUseCase = getCategoriesUseCase,
+        _addCategoryUseCase = addCategoryUseCase,
+        _updateCategoryUseCase = updateCategoryUseCase,
+        _deleteCategoryUseCase = deleteCategoryUseCase {
+    fetchCategories();
   }
 
-  void addCategory(String categoryName) {
+  Future<void> fetchCategories() async {
+    categories = await _getCategoriesUseCase();
+    notifyListeners();
+  }
+
+  Future<void> addCategory(String categoryName) async {
     final newCategory = MenuCategory(category: categoryName, items: []);
-    _categoryBox.add(newCategory);
-    notifyListeners();
+    await _addCategoryUseCase(newCategory);
+    await fetchCategories();
   }
 
-  void editCategory(MenuCategory category, String newCategoryName) {
+  Future<void> editCategory(
+      MenuCategory category, String newCategoryName) async {
     category.category = newCategoryName;
-    category.save();
-    notifyListeners();
+    await _updateCategoryUseCase(category);
+    await fetchCategories();
   }
 
-  void deleteCategory(MenuCategory category) {
-    if (category.items.isNotEmpty) {
-      throw Exception('カテゴリーにメニューアイテムが存在します。削除できません。');
-    }
-    category.delete();
-    notifyListeners();
+  Future<void> deleteCategory(MenuCategory category) async {
+    await _deleteCategoryUseCase(category);
+    await fetchCategories();
   }
 }

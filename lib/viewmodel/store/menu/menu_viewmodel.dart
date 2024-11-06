@@ -1,39 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:veloxorder/domain/category/model/menu_category.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
+import 'package:veloxorder/domain/category/model/menu_category.dart';
+import 'package:veloxorder/domain/menu/usecase/get_menu_categories_usecase.dart';
+import 'package:veloxorder/domain/menu/usecase/add_menu_item_usecase.dart';
+import 'package:veloxorder/domain/menu/usecase/update_menu_item_usecase.dart';
+import 'package:veloxorder/domain/menu/usecase/delete_menu_item_usecase.dart';
 
 class MenuViewModel extends ChangeNotifier {
-  late Box<MenuCategory> _menuBox;
+  final GetMenuCategoriesUseCase _getMenuCategoriesUseCase;
+  final AddMenuItemUseCase _addMenuItemUseCase;
+  final UpdateMenuItemUseCase _updateMenuItemUseCase;
+  final DeleteMenuItemUseCase _deleteMenuItemUseCase;
 
-  List<MenuCategory> get menuCategories => _menuBox.values.toList();
+  List<MenuCategory> menuCategories = [];
 
-  MenuViewModel() {
-    _menuBox = Hive.box<MenuCategory>('menuCategories');
+  MenuViewModel({
+    required GetMenuCategoriesUseCase getMenuCategoriesUseCase,
+    required AddMenuItemUseCase addMenuItemUseCase,
+    required UpdateMenuItemUseCase updateMenuItemUseCase,
+    required DeleteMenuItemUseCase deleteMenuItemUseCase,
+  })  : _getMenuCategoriesUseCase = getMenuCategoriesUseCase,
+        _addMenuItemUseCase = addMenuItemUseCase,
+        _updateMenuItemUseCase = updateMenuItemUseCase,
+        _deleteMenuItemUseCase = deleteMenuItemUseCase {
+    fetchMenuCategories();
   }
 
-  void addMenuItem(String categoryName, MenuItem item) {
-    final category = _menuBox.values.firstWhere(
-        (cat) => cat.category == categoryName,
-        orElse: () => throw Exception('Category not found'));
-    category.items.add(item);
-    category.save();
+  Future<void> fetchMenuCategories() async {
+    menuCategories = await _getMenuCategoriesUseCase();
     notifyListeners();
   }
 
-  void updateMenuItem(MenuCategory category, MenuItem item, String name,
-      int price, String? imagePath, String? notes) {
-    item.name = name;
-    item.price = price;
-    item.imagePath = imagePath;
-    item.notes = notes;
-    category.save();
-    notifyListeners();
+  Future<void> addMenuItem(String categoryName, MenuItem item) async {
+    await _addMenuItemUseCase(categoryName, item);
+    await fetchMenuCategories();
   }
 
-  void deleteMenuItem(MenuCategory category, MenuItem item) {
-    category.items.remove(item);
-    category.save();
-    notifyListeners();
+  Future<void> updateMenuItem(MenuCategory category, MenuItem item) async {
+    await _updateMenuItemUseCase(category, item);
+    await fetchMenuCategories();
+  }
+
+  Future<void> deleteMenuItem(MenuCategory category, MenuItem item) async {
+    await _deleteMenuItemUseCase(category, item);
+    await fetchMenuCategories();
   }
 }
