@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'menu_item.dart';
+import '../../menu/model/menu_item.dart';
 
 part 'menu_category.g.dart';
 

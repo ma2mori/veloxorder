@@ -5,8 +5,8 @@ import 'package:veloxorder/view/store/transaction_registration_screen.dart';
 import 'package:veloxorder/view/store/menu_registration_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:veloxorder/data/models/menu_item.dart';
-import 'package:veloxorder/data/models/menu_category.dart';
+import 'package:veloxorder/domain/menu/model/menu_item.dart';
+import 'package:veloxorder/domain/category/model/menu_category.dart';
 import 'package:veloxorder/viewmodel/store/category_viewmodel.dart';
 import 'package:veloxorder/viewmodel/store/menu_viewmodel.dart';
 

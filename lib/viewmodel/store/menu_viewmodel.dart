@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:veloxorder/data/models/menu_category.dart';
-import 'package:veloxorder/data/models/menu_item.dart';
+import 'package:veloxorder/domain/category/model/menu_category.dart';
+import 'package:veloxorder/domain/menu/model/menu_item.dart';
 
 class MenuViewModel extends ChangeNotifier {
   late Box<MenuCategory> _menuBox;
