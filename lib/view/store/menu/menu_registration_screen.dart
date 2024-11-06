@@ -5,7 +5,7 @@ import 'package:veloxorder/view/store/common_drawer.dart';
 import 'package:veloxorder/view/store/menu/dialog/add_menu_item_dialog.dart';
 import 'package:veloxorder/view/store/menu/dialog/delete_menu_item_dialog.dart';
 import 'package:veloxorder/view/store/menu/dialog/edit_menu_item_dialog.dart';
-import 'package:veloxorder/viewmodel/store/menu_viewmodel.dart';
+import 'package:veloxorder/viewmodel/store/menu/menu_viewmodel.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
 
 class MenuRegistrationScreen extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:veloxorder/viewmodel/store/category_viewmodel.dart';
+import 'package:veloxorder/viewmodel/store/category/category_viewmodel.dart';
 
 class AddCategoryDialog extends StatelessWidget {
   @override

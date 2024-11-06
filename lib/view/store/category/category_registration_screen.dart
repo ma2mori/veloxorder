@@ -5,7 +5,7 @@ import 'package:veloxorder/view/store/common_drawer.dart';
 import 'package:veloxorder/view/store/category/dialog/add_category_dialog.dart';
 import 'package:veloxorder/view/store/category/dialog/delete_category_dialog.dart';
 import 'package:veloxorder/view/store/category/dialog/edit_category_dialog.dart';
-import 'package:veloxorder/viewmodel/store/category_viewmodel.dart';
+import 'package:veloxorder/viewmodel/store/category/category_viewmodel.dart';
 
 class CategoryRegistrationScreen extends StatelessWidget {
   @override

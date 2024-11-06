@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:veloxorder/domain/category/model/menu_category.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
-import 'package:veloxorder/viewmodel/store/menu_viewmodel.dart';
+import 'package:veloxorder/viewmodel/store/menu/menu_viewmodel.dart';
 
 class AddMenuItemDialog extends StatelessWidget {
   final MenuCategory category;
