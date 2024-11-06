@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:veloxorder/view/store/category_registration_screen.dart';
-import 'package:veloxorder/view/store/order_management_screen.dart';
-import 'package:veloxorder/view/store/transaction_registration_screen.dart';
-import 'package:veloxorder/view/store/menu_registration_screen.dart';
+import 'package:veloxorder/view/store/category/category_registration_screen.dart';
+import 'package:veloxorder/view/store/order/order_management_screen.dart';
+import 'package:veloxorder/view/store/transaction/transaction_registration_screen.dart';
+import 'package:veloxorder/view/store/menu/menu_registration_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';

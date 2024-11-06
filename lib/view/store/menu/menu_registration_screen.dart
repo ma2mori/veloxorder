@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:veloxorder/domain/category/model/menu_category.dart';
 import 'package:veloxorder/view/store/common_drawer.dart';
-import 'package:veloxorder/view/store/dialog/add_menu_item_dialog.dart';
-import 'package:veloxorder/view/store/dialog/delete_menu_item_dialog.dart';
-import 'package:veloxorder/view/store/dialog/edit_menu_item_dialog.dart';
+import 'package:veloxorder/view/store/menu/dialog/add_menu_item_dialog.dart';
+import 'package:veloxorder/view/store/menu/dialog/delete_menu_item_dialog.dart';
+import 'package:veloxorder/view/store/menu/dialog/edit_menu_item_dialog.dart';
 import 'package:veloxorder/viewmodel/store/menu_viewmodel.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
 
