@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:veloxorder/data/models/menu_category.dart';
-import 'package:veloxorder/data/models/menu_item.dart';
-import 'package:veloxorder/viewmodel/store/menu_viewmodel.dart';
+import 'package:veloxorder/domain/category/model/menu_category.dart';
+import 'package:veloxorder/domain/menu/model/menu_item.dart';
+import 'package:veloxorder/viewmodel/store/menu/menu_viewmodel.dart';
 
 class AddMenuItemDialog extends StatelessWidget {
   final MenuCategory category;
@@ -79,10 +79,11 @@ class AddMenuItemDialog extends StatelessWidget {
                 final newItem = MenuItem(
                   name: itemName!,
                   price: itemPrice!,
+                  categoryId: category.key as int,
                   notes: itemNotes,
                 );
                 Provider.of<MenuViewModel>(context, listen: false)
-                    .addMenuItem(category.category, newItem);
+                    .addMenuItem(newItem);
               }
               Navigator.of(context).pop();
             }

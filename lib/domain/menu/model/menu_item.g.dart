@@ -1,35 +1,44 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'menu_category.dart';
+part of 'menu_item.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class MenuCategoryAdapter extends TypeAdapter<MenuCategory> {
+class MenuItemAdapter extends TypeAdapter<MenuItem> {
   @override
-  final int typeId = 1;
+  final int typeId = 0;
 
   @override
-  MenuCategory read(BinaryReader reader) {
+  MenuItem read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return MenuCategory(
-      category: fields[0] as String,
-      items: (fields[1] as List).cast<MenuItem>(),
+    return MenuItem(
+      name: fields[0] as String,
+      price: fields[1] as int,
+      categoryId: fields[4] as int,
+      imagePath: fields[2] as String?,
+      notes: fields[3] as String?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, MenuCategory obj) {
+  void write(BinaryWriter writer, MenuItem obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(5)
       ..writeByte(0)
-      ..write(obj.category)
+      ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.items);
+      ..write(obj.price)
+      ..writeByte(2)
+      ..write(obj.imagePath)
+      ..writeByte(3)
+      ..write(obj.notes)
+      ..writeByte(4)
+      ..write(obj.categoryId);
   }
 
   @override
@@ -38,7 +47,7 @@ class MenuCategoryAdapter extends TypeAdapter<MenuCategory> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MenuCategoryAdapter &&
+      other is MenuItemAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

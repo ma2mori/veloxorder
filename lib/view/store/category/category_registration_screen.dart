@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:veloxorder/data/models/menu_category.dart';
+import 'package:veloxorder/domain/category/model/menu_category.dart';
 import 'package:veloxorder/view/store/common_drawer.dart';
-import 'package:veloxorder/view/store/dialog/add_category_dialog.dart';
-import 'package:veloxorder/view/store/dialog/delete_category_dialog.dart';
-import 'package:veloxorder/view/store/dialog/edit_category_dialog.dart';
-import 'package:veloxorder/viewmodel/store/category_viewmodel.dart';
+import 'package:veloxorder/view/store/category/dialog/add_category_dialog.dart';
+import 'package:veloxorder/view/store/category/dialog/delete_category_dialog.dart';
+import 'package:veloxorder/view/store/category/dialog/edit_category_dialog.dart';
+import 'package:veloxorder/viewmodel/store/category/category_viewmodel.dart';
 
 class CategoryRegistrationScreen extends StatelessWidget {
   @override

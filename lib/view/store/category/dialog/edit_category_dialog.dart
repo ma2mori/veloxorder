@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:veloxorder/viewmodel/store/category_viewmodel.dart';
+import 'package:veloxorder/domain/category/model/menu_category.dart';
+import 'package:veloxorder/viewmodel/store/category/category_viewmodel.dart';
 
-class AddCategoryDialog extends StatelessWidget {
+class EditCategoryDialog extends StatelessWidget {
+  final MenuCategory category;
+
+  EditCategoryDialog({required this.category});
+
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    String? categoryName;
+    String? newCategoryName = category.category;
 
     return AlertDialog(
-      title: Text('カテゴリー追加'),
+      title: Text('カテゴリー編集'),
       content: Form(
         key: _formKey,
         child: TextFormField(
+          initialValue: category.category,
           decoration: InputDecoration(labelText: 'カテゴリー名'),
           validator: (value) {
             if (value == null || value.isEmpty) {
@@ -21,7 +27,7 @@ class AddCategoryDialog extends StatelessWidget {
             return null;
           },
           onSaved: (value) {
-            categoryName = value;
+            newCategoryName = value;
           },
         ),
       ),
@@ -33,13 +39,14 @@ class AddCategoryDialog extends StatelessWidget {
           },
         ),
         ElevatedButton(
-          child: Text('追加'),
+          child: Text('保存'),
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               _formKey.currentState!.save();
-              if (categoryName != null) {
+              if (newCategoryName != null &&
+                  newCategoryName != category.category) {
                 Provider.of<CategoryViewModel>(context, listen: false)
-                    .addCategory(categoryName!);
+                    .editCategory(category, newCategoryName!);
               }
               Navigator.of(context).pop();
             }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:veloxorder/data/models/menu_item.dart';
-import 'package:veloxorder/viewmodel/store/menu_viewmodel.dart';
-import 'package:veloxorder/data/models/menu_category.dart';
+import 'package:veloxorder/domain/menu/model/menu_item.dart';
+import 'package:veloxorder/viewmodel/store/menu/menu_viewmodel.dart';
+import 'package:veloxorder/domain/category/model/menu_category.dart';
 
 class EditMenuItemDialog extends StatelessWidget {
   final MenuCategory category;
@@ -80,9 +80,11 @@ class EditMenuItemDialog extends StatelessWidget {
             if (_formKey.currentState!.validate()) {
               _formKey.currentState!.save();
               if (itemName != null && itemPrice != null) {
+                item.name = itemName!;
+                item.price = itemPrice!;
+                item.notes = itemNotes;
                 Provider.of<MenuViewModel>(context, listen: false)
-                    .updateMenuItem(category, item, itemName!, itemPrice!,
-                        item.imagePath, itemNotes);
+                    .updateMenuItem(item);
               }
               Navigator.of(context).pop();
             }

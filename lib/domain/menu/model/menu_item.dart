@@ -16,9 +16,13 @@ class MenuItem extends HiveObject {
   @HiveField(3)
   String? notes;
 
+  @HiveField(4)
+  int categoryId;
+
   MenuItem({
     required this.name,
     required this.price,
+    required this.categoryId,
     this.imagePath,
     this.notes,
   });

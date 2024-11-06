@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:veloxorder/data/models/menu_category.dart';
-import 'package:veloxorder/viewmodel/store/menu_viewmodel.dart';
-import 'package:veloxorder/data/models/menu_item.dart';
+import 'package:veloxorder/domain/category/model/menu_category.dart';
+import 'package:veloxorder/viewmodel/store/menu/menu_viewmodel.dart';
+import 'package:veloxorder/domain/menu/model/menu_item.dart';
 
 class DeleteMenuItemDialog extends StatelessWidget {
   final MenuCategory category;
@@ -30,7 +30,7 @@ class DeleteMenuItemDialog extends StatelessWidget {
           child: Text('削除'),
           onPressed: () {
             Provider.of<MenuViewModel>(context, listen: false)
-                .deleteMenuItem(category, item);
+                .deleteMenuItem(item);
             Navigator.of(context).pop();
           },
         ),

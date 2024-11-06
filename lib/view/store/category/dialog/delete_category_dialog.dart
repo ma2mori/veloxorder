@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:veloxorder/data/models/menu_category.dart';
-import 'package:veloxorder/viewmodel/store/category_viewmodel.dart';
+import 'package:veloxorder/domain/category/model/menu_category.dart';
+import 'package:veloxorder/viewmodel/store/category/category_viewmodel.dart';
 
 class DeleteCategoryDialog extends StatelessWidget {
   final MenuCategory category;
@@ -23,9 +23,9 @@ class DeleteCategoryDialog extends StatelessWidget {
         ),
         ElevatedButton(
           child: Text('削除'),
-          onPressed: () {
+          onPressed: () async {
             try {
-              Provider.of<CategoryViewModel>(context, listen: false)
+              await Provider.of<CategoryViewModel>(context, listen: false)
                   .deleteCategory(category);
               Navigator.of(context).pop();
             } catch (e) {
