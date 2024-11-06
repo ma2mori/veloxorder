@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:veloxorder/di/locator.dart';
 import 'package:veloxorder/domain/category/model/menu_category.dart';
 import 'package:veloxorder/domain/category/usecase/get_categories_usecase.dart';
 import 'package:veloxorder/domain/category/usecase/add_category_usecase.dart';
@@ -6,22 +7,17 @@ import 'package:veloxorder/domain/category/usecase/update_category_usecase.dart'
 import 'package:veloxorder/domain/category/usecase/delete_category_usecase.dart';
 
 class CategoryViewModel extends ChangeNotifier {
-  final GetCategoriesUseCase _getCategoriesUseCase;
-  final AddCategoryUseCase _addCategoryUseCase;
-  final UpdateCategoryUseCase _updateCategoryUseCase;
-  final DeleteCategoryUseCase _deleteCategoryUseCase;
+  final GetCategoriesUseCase _getCategoriesUseCase =
+      getIt<GetCategoriesUseCase>();
+  final AddCategoryUseCase _addCategoryUseCase = getIt<AddCategoryUseCase>();
+  final UpdateCategoryUseCase _updateCategoryUseCase =
+      getIt<UpdateCategoryUseCase>();
+  final DeleteCategoryUseCase _deleteCategoryUseCase =
+      getIt<DeleteCategoryUseCase>();
 
   List<MenuCategory> categories = [];
 
-  CategoryViewModel({
-    required GetCategoriesUseCase getCategoriesUseCase,
-    required AddCategoryUseCase addCategoryUseCase,
-    required UpdateCategoryUseCase updateCategoryUseCase,
-    required DeleteCategoryUseCase deleteCategoryUseCase,
-  })  : _getCategoriesUseCase = getCategoriesUseCase,
-        _addCategoryUseCase = addCategoryUseCase,
-        _updateCategoryUseCase = updateCategoryUseCase,
-        _deleteCategoryUseCase = deleteCategoryUseCase {
+  CategoryViewModel() {
     fetchCategories();
   }
 

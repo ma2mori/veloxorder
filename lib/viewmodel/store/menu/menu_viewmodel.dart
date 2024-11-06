@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:veloxorder/di/locator.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
 import 'package:veloxorder/domain/menu/usecase/get_menu_items_usecase.dart';
 import 'package:veloxorder/domain/menu/usecase/add_menu_item_usecase.dart';
@@ -6,22 +7,16 @@ import 'package:veloxorder/domain/menu/usecase/update_menu_item_usecase.dart';
 import 'package:veloxorder/domain/menu/usecase/delete_menu_item_usecase.dart';
 
 class MenuViewModel extends ChangeNotifier {
-  final GetMenuItemsUseCase _getMenuItemsUseCase;
-  final AddMenuItemUseCase _addMenuItemUseCase;
-  final UpdateMenuItemUseCase _updateMenuItemUseCase;
-  final DeleteMenuItemUseCase _deleteMenuItemUseCase;
+  final GetMenuItemsUseCase _getMenuItemsUseCase = getIt<GetMenuItemsUseCase>();
+  final AddMenuItemUseCase _addMenuItemUseCase = getIt<AddMenuItemUseCase>();
+  final UpdateMenuItemUseCase _updateMenuItemUseCase =
+      getIt<UpdateMenuItemUseCase>();
+  final DeleteMenuItemUseCase _deleteMenuItemUseCase =
+      getIt<DeleteMenuItemUseCase>();
 
   List<MenuItem> menuItems = [];
 
-  MenuViewModel({
-    required GetMenuItemsUseCase getMenuItemsUseCase,
-    required AddMenuItemUseCase addMenuItemUseCase,
-    required UpdateMenuItemUseCase updateMenuItemUseCase,
-    required DeleteMenuItemUseCase deleteMenuItemUseCase,
-  })  : _getMenuItemsUseCase = getMenuItemsUseCase,
-        _addMenuItemUseCase = addMenuItemUseCase,
-        _updateMenuItemUseCase = updateMenuItemUseCase,
-        _deleteMenuItemUseCase = deleteMenuItemUseCase {
+  MenuViewModel() {
     fetchMenuItems();
   }
 
