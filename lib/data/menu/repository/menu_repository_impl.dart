@@ -1,11 +1,12 @@
+import 'package:veloxorder/di/locator.dart';
 import 'package:veloxorder/domain/menu/repository/menu_repository.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
 import 'package:hive/hive.dart';
 
 class MenuRepositoryImpl implements MenuRepository {
-  final Box<MenuItem> _menuItemBox;
+  final Box<MenuItem> _menuItemBox = getIt<Box<MenuItem>>();
 
-  MenuRepositoryImpl(this._menuItemBox);
+  MenuRepositoryImpl();
 
   @override
   Future<List<MenuItem>> getMenuItems() async {

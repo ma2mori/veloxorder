@@ -1,3 +1,4 @@
+import 'package:veloxorder/di/locator.dart';
 import 'package:veloxorder/domain/category/repository/category_repository.dart';
 import 'package:veloxorder/domain/category/model/menu_category.dart';
 import 'package:veloxorder/domain/menu/repository/menu_repository.dart';
@@ -5,10 +6,10 @@ import 'package:veloxorder/domain/menu/model/menu_item.dart';
 import 'package:hive/hive.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {
-  final Box<MenuCategory> _categoryBox;
-  final MenuRepository _menuRepository;
+  final Box<MenuCategory> _categoryBox = getIt<Box<MenuCategory>>();
+  final MenuRepository _menuRepository = getIt<MenuRepository>();
 
-  CategoryRepositoryImpl(this._categoryBox, this._menuRepository);
+  CategoryRepositoryImpl();
 
   @override
   Future<List<MenuCategory>> getCategories() async {
