@@ -18,6 +18,7 @@ class TransactionViewModel extends ChangeNotifier {
 
   Future<void> fetchTransactions() async {
     transactions = await _getTransactionsUseCase();
+    transactions.sort((a, b) => b.dateTime.compareTo(a.dateTime));
     notifyListeners();
   }
 
