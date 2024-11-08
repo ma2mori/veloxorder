@@ -35,6 +35,13 @@ class CommonDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: Icon(Icons.history),
+            title: Text('取引履歴'),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, '/transactionHistory');
+            },
+          ),
+          ListTile(
             leading: Icon(Icons.restaurant_menu),
             title: Text('メニュー登録'),
             onTap: () {

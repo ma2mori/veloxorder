@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:veloxorder/di/locator.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
@@ -42,5 +43,9 @@ class MenuViewModel extends ChangeNotifier {
   Future<void> deleteMenuItem(MenuItem item) async {
     await _deleteMenuItemUseCase(item);
     await fetchMenuItems();
+  }
+
+  MenuItem? getMenuItemByKey(int key) {
+    return menuItems.firstWhereOrNull((item) => item.key == key);
   }
 }
