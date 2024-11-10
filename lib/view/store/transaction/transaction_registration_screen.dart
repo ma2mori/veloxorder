@@ -6,9 +6,11 @@ import 'package:veloxorder/view/store/transaction/dialog/received_amount_dialog.
 import 'package:veloxorder/viewmodel/store/menu/menu_viewmodel.dart';
 import 'package:veloxorder/viewmodel/store/category/category_viewmodel.dart';
 import 'package:veloxorder/viewmodel/store/transaction/transaction_viewmodel.dart';
+import 'package:veloxorder/viewmodel/store/order/order_viewmodel.dart';
 import 'package:veloxorder/domain/category/model/menu_category.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
 import 'package:veloxorder/domain/transaction/model/transaction.dart';
+import 'package:veloxorder/domain/order/model/order.dart';
 
 class TransactionRegistrationScreen extends StatefulWidget {
   @override
@@ -300,6 +302,18 @@ class _TransactionRegistrationScreenState
     // 取引データを保存
     await Provider.of<TransactionViewModel>(context, listen: false)
         .addTransaction(transaction);
+
+    // Orderデータを作成
+    Order order = Order(
+      id: transactionId,
+      voucherNumber: voucherNumber,
+      dateTime: DateTime.now(),
+      items: Map.from(selectedItems),
+      status: OrderStatus.pending, // 初期ステータスは未調理
+    );
+
+    // Orderデータを保存
+    await Provider.of<OrderViewModel>(context, listen: false).addOrder(order);
 
     // QRコードを表示する画面に遷移（後で実装）
     // TODO: QRコード表示画面を実装

@@ -43,6 +43,7 @@ import 'package:veloxorder/domain/order/model/order.dart';
 import 'package:veloxorder/viewmodel/store/menu/menu_viewmodel.dart';
 import 'package:veloxorder/viewmodel/store/category/category_viewmodel.dart';
 import 'package:veloxorder/viewmodel/store/transaction/transaction_viewmodel.dart';
+import 'package:veloxorder/viewmodel/store/order/order_viewmodel.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -115,4 +116,5 @@ Future<void> setupLocator() async {
   getIt.registerLazySingleton<CategoryViewModel>(() => CategoryViewModel());
   getIt.registerLazySingleton<TransactionViewModel>(
       () => TransactionViewModel());
+  getIt.registerLazySingleton<OrderViewModel>(() => OrderViewModel());
 }
