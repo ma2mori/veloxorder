@@ -9,6 +9,7 @@ import 'package:veloxorder/view/store/menu/menu_registration_screen.dart';
 import 'package:veloxorder/viewmodel/store/category/category_viewmodel.dart';
 import 'package:veloxorder/viewmodel/store/menu/menu_viewmodel.dart';
 import 'package:veloxorder/viewmodel/store/transaction/transaction_viewmodel.dart';
+import 'package:veloxorder/viewmodel/store/order/order_viewmodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +27,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => getIt<TransactionViewModel>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => getIt<OrderViewModel>(),
         ),
       ],
       child: VeloxOrderApp(),
