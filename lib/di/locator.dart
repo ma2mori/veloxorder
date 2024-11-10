@@ -56,7 +56,8 @@ Future<void> setupLocator() async {
   Hive.registerAdapter(MenuCategoryAdapter());
   Hive.registerAdapter(TransactionAdapter());
   Hive.registerAdapter(OrderAdapter());
-  Hive.registerAdapter(OrderStatusAdapter());
+  Hive.registerAdapter(OrderItemAdapter());
+  Hive.registerAdapter(OrderItemStatusAdapter());
 
   // ボックスのオープン
   final menuItemBox = await Hive.openBox<MenuItem>('menuItems');

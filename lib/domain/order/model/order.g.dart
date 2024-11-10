@@ -20,15 +20,14 @@ class OrderAdapter extends TypeAdapter<Order> {
       id: fields[0] as int,
       voucherNumber: fields[1] as String,
       dateTime: fields[2] as DateTime,
-      items: (fields[3] as Map).cast<int, int>(),
-      status: fields[4] as OrderStatus,
+      items: (fields[3] as List).cast<OrderItem>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Order obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -36,9 +35,7 @@ class OrderAdapter extends TypeAdapter<Order> {
       ..writeByte(2)
       ..write(obj.dateTime)
       ..writeByte(3)
-      ..write(obj.items)
-      ..writeByte(4)
-      ..write(obj.status);
+      ..write(obj.items);
   }
 
   @override
@@ -52,34 +49,74 @@ class OrderAdapter extends TypeAdapter<Order> {
           typeId == other.typeId;
 }
 
-class OrderStatusAdapter extends TypeAdapter<OrderStatus> {
+class OrderItemAdapter extends TypeAdapter<OrderItem> {
   @override
   final int typeId = 4;
 
   @override
-  OrderStatus read(BinaryReader reader) {
+  OrderItem read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return OrderItem(
+      menuItemKey: fields[0] as int,
+      quantity: fields[1] as int,
+      status: fields[2] as OrderItemStatus,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, OrderItem obj) {
+    writer
+      ..writeByte(3)
+      ..writeByte(0)
+      ..write(obj.menuItemKey)
+      ..writeByte(1)
+      ..write(obj.quantity)
+      ..writeByte(2)
+      ..write(obj.status);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is OrderItemAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class OrderItemStatusAdapter extends TypeAdapter<OrderItemStatus> {
+  @override
+  final int typeId = 5;
+
+  @override
+  OrderItemStatus read(BinaryReader reader) {
     switch (reader.readByte()) {
       case 0:
-        return OrderStatus.pending;
+        return OrderItemStatus.pending;
       case 1:
-        return OrderStatus.prepared;
+        return OrderItemStatus.prepared;
       case 2:
-        return OrderStatus.delivered;
+        return OrderItemStatus.delivered;
       default:
-        return OrderStatus.pending;
+        return OrderItemStatus.pending;
     }
   }
 
   @override
-  void write(BinaryWriter writer, OrderStatus obj) {
+  void write(BinaryWriter writer, OrderItemStatus obj) {
     switch (obj) {
-      case OrderStatus.pending:
+      case OrderItemStatus.pending:
         writer.writeByte(0);
         break;
-      case OrderStatus.prepared:
+      case OrderItemStatus.prepared:
         writer.writeByte(1);
         break;
-      case OrderStatus.delivered:
+      case OrderItemStatus.delivered:
         writer.writeByte(2);
         break;
     }
@@ -91,7 +128,7 @@ class OrderStatusAdapter extends TypeAdapter<OrderStatus> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is OrderStatusAdapter &&
+      other is OrderItemStatusAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

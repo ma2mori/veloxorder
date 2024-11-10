@@ -303,13 +303,24 @@ class _TransactionRegistrationScreenState
     await Provider.of<TransactionViewModel>(context, listen: false)
         .addTransaction(transaction);
 
+    // OrderItemのリストを作成
+    List<OrderItem> orderItems = [];
+    selectedItems.forEach((itemKey, quantity) {
+      for (int i = 0; i < quantity; i++) {
+        orderItems.add(OrderItem(
+          menuItemKey: itemKey,
+          quantity: 1,
+          status: OrderItemStatus.pending, // 初期ステータスは未調理
+        ));
+      }
+    });
+
     // Orderデータを作成
     Order order = Order(
       id: transactionId,
       voucherNumber: voucherNumber,
       dateTime: DateTime.now(),
-      items: Map.from(selectedItems),
-      status: OrderStatus.pending, // 初期ステータスは未調理
+      items: orderItems,
     );
 
     // Orderデータを保存

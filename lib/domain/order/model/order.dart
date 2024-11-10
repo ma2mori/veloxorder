@@ -14,22 +14,36 @@ class Order extends HiveObject {
   DateTime dateTime;
 
   @HiveField(3)
-  Map<int, int> items;
-
-  @HiveField(4)
-  OrderStatus status;
+  List<OrderItem> items;
 
   Order({
     required this.id,
     required this.voucherNumber,
     required this.dateTime,
     required this.items,
-    this.status = OrderStatus.pending,
   });
 }
 
 @HiveType(typeId: 4)
-enum OrderStatus {
+class OrderItem extends HiveObject {
+  @HiveField(0)
+  int menuItemKey;
+
+  @HiveField(1)
+  int quantity;
+
+  @HiveField(2)
+  OrderItemStatus status;
+
+  OrderItem({
+    required this.menuItemKey,
+    required this.quantity,
+    this.status = OrderItemStatus.pending,
+  });
+}
+
+@HiveType(typeId: 5)
+enum OrderItemStatus {
   @HiveField(0)
   pending, // 未調理
 
