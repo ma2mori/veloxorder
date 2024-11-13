@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction hide Order;
 
 // リポジトリインターフェースと実装
 import 'package:veloxorder/domain/menu/repository/menu_repository.dart';
@@ -50,6 +52,12 @@ final GetIt getIt = GetIt.instance;
 Future<void> setupLocator() async {
   // Hive の初期化
   await Hive.initFlutter();
+
+  // Firebase の初期化
+  await Firebase.initializeApp();
+
+  // FirebaseFirestore のインスタンスを取得
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   // アダプターの登録
   Hive.registerAdapter(MenuItemAdapter());
