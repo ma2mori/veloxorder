@@ -1,78 +1,55 @@
-import 'package:veloxorder/di/locator.dart';
 import 'package:veloxorder/domain/menu/repository/menu_repository.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
-import 'package:hive/hive.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:veloxorder/data/menu/source/remote/menu_remote_data_source.dart';
+import 'package:veloxorder/data/menu/source/local/menu_local_data_source.dart';
 
 class MenuRepositoryImpl implements MenuRepository {
-  final Box<MenuItem> _menuItemBox = getIt<Box<MenuItem>>();
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final MenuRemoteDataSource _remoteDataSource;
+  final MenuLocalDataSource _localDataSource;
 
-  MenuRepositoryImpl();
+  MenuRepositoryImpl(this._remoteDataSource, this._localDataSource);
 
   @override
   Future<List<MenuItem>> getMenuItems() async {
-    // Firebase からデータを取得し、ローカルに保存
-    var snapshot = await _firestore.collection('menuItems').get();
+    try {
+      // リモートからデータを取得
+      List<MenuItem> remoteItems = await _remoteDataSource.fetchMenuItems();
 
-    for (var doc in snapshot.docs) {
-      var data = doc.data();
-      MenuItem item = MenuItem(
-        id: doc.id,
-        name: data['name'],
-        price: data['price'],
-        categoryId: data['categoryId'],
-        notes: data['notes'],
-        imagePath: data['imagePath'],
-      );
-      // ローカルに保存（キーは Hive の自動生成キーを使用）
-      await _menuItemBox.put(item.key, item);
+      // ローカルに保存
+      await _localDataSource.saveMenuItems(remoteItems);
+
+      return remoteItems;
+    } catch (e) {
+      // リモートからの取得に失敗した場合、ローカルから取得
+      return await _localDataSource.getMenuItems();
     }
-
-    return _menuItemBox.values.toList();
   }
 
   @override
   Future<void> addMenuItem(MenuItem item) async {
-    // Firebase に追加
-    DocumentReference docRef = await _firestore.collection('menuItems').add({
-      'name': item.name,
-      'price': item.price,
-      'categoryId': item.categoryId,
-      'notes': item.notes,
-      'imagePath': item.imagePath,
-    });
-    item.id = docRef.id;
+    // リモートに追加
+    String id = await _remoteDataSource.addMenuItem(item);
+    item.id = id;
 
-    // ローカルに保存
-    await _menuItemBox.add(item);
+    // ローカルに追加
+    await _localDataSource.addMenuItem(item);
   }
 
   @override
   Future<void> updateMenuItem(MenuItem item) async {
-    // Firebase を更新
-    if (item.id != null) {
-      await _firestore.collection('menuItems').doc(item.id).update({
-        'name': item.name,
-        'price': item.price,
-        'categoryId': item.categoryId,
-        'notes': item.notes,
-        'imagePath': item.imagePath,
-      });
-    }
+    // リモートを更新
+    await _remoteDataSource.updateMenuItem(item);
 
     // ローカルを更新
-    await item.save();
+    await _localDataSource.updateMenuItem(item);
   }
 
   @override
   Future<void> deleteMenuItem(MenuItem item) async {
-    // Firebase から削除
-    if (item.id != null) {
-      await _firestore.collection('menuItems').doc(item.id).delete();
-    }
+    // リモートから削除
+    await _remoteDataSource.deleteMenuItem(item);
 
     // ローカルから削除
-    await item.delete();
+    await _localDataSource.deleteMenuItem(item);
   }
 }
