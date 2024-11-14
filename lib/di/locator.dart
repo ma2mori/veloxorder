@@ -1,11 +1,16 @@
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction hide Order;
+import 'package:cloud_firestore/cloud_firestore.dart'
+    hide Transaction
+    hide Order;
 
 // データソース
 import 'package:veloxorder/data/menu/source/remote/menu_remote_data_source.dart';
 import 'package:veloxorder/data/menu/source/local/menu_local_data_source.dart';
+
+import 'package:veloxorder/data/category/source/remote/category_remote_data_source.dart';
+import 'package:veloxorder/data/category/source/local/category_local_data_source.dart';
 
 // リポジトリインターフェースと実装
 import 'package:veloxorder/domain/menu/repository/menu_repository.dart';
@@ -68,6 +73,10 @@ Future<void> setupLocator() async {
       () => MenuRemoteDataSource(firestore));
   getIt.registerLazySingleton<MenuLocalDataSource>(
       () => MenuLocalDataSource(getIt<Box<MenuItem>>()));
+  getIt.registerLazySingleton<CategoryRemoteDataSource>(
+      () => CategoryRemoteDataSource(firestore));
+  getIt.registerLazySingleton<CategoryLocalDataSource>(
+      () => CategoryLocalDataSource(getIt<Box<MenuCategory>>()));
 
   // アダプターの登録
   Hive.registerAdapter(MenuItemAdapter());
@@ -92,8 +101,8 @@ Future<void> setupLocator() async {
   // リポジトリの登録
   getIt.registerLazySingleton<MenuRepository>(() => MenuRepositoryImpl(
       getIt<MenuRemoteDataSource>(), getIt<MenuLocalDataSource>()));
-  getIt.registerLazySingleton<CategoryRepository>(
-      () => CategoryRepositoryImpl());
+  getIt.registerLazySingleton<CategoryRepository>(() => CategoryRepositoryImpl(
+      getIt<CategoryRemoteDataSource>(), getIt<CategoryLocalDataSource>()));
   getIt.registerLazySingleton<TransactionRepository>(
       () => TransactionRepositoryImpl());
   getIt.registerLazySingleton<OrderRepository>(() => OrderRepositoryImpl());
