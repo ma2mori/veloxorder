@@ -17,7 +17,7 @@ class OrderAdapter extends TypeAdapter<Order> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Order(
-      id: fields[0] as int,
+      id: fields[0] as String?,
       voucherNumber: fields[1] as String,
       dateTime: fields[2] as DateTime,
       items: (fields[3] as List).cast<OrderItem>(),
@@ -60,7 +60,7 @@ class OrderItemAdapter extends TypeAdapter<OrderItem> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return OrderItem(
-      menuItemKey: fields[0] as int,
+      menuItemId: fields[0] as String,
       quantity: fields[1] as int,
       status: fields[2] as OrderItemStatus,
     );
@@ -71,7 +71,7 @@ class OrderItemAdapter extends TypeAdapter<OrderItem> {
     writer
       ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.menuItemKey)
+      ..write(obj.menuItemId)
       ..writeByte(1)
       ..write(obj.quantity)
       ..writeByte(2)

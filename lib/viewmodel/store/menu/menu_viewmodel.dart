@@ -48,4 +48,8 @@ class MenuViewModel extends ChangeNotifier {
   MenuItem? getMenuItemByKey(int key) {
     return menuItems.firstWhereOrNull((item) => item.key == key);
   }
+
+  MenuItem? getMenuItemById(String id) {
+    return menuItems.firstWhereOrNull((item) => item.id == id);
+  }
 }

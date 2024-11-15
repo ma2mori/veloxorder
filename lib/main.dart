@@ -24,17 +24,6 @@ void main() async {
   // Firestoreインスタンスの取得
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  // テスト用のデータを書き込む
-  await firestore
-      .collection('test')
-      .doc('testDoc')
-      .set({'testField': 'testValue'});
-
-  // テスト用のドキュメントを取得
-  var testDoc = await firestore.collection('test').doc('testDoc').get();
-
-  print('Firestoreから取得したデータ: ${testDoc.data()}');
-
   await setupLocator();
 
   runApp(

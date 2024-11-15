@@ -12,6 +12,12 @@ import 'package:veloxorder/data/menu/source/local/menu_local_data_source.dart';
 import 'package:veloxorder/data/category/source/remote/category_remote_data_source.dart';
 import 'package:veloxorder/data/category/source/local/category_local_data_source.dart';
 
+import 'package:veloxorder/data/transaction/source/remote/transaction_remote_data_source.dart';
+import 'package:veloxorder/data/transaction/source/local/transaction_local_data_source.dart';
+
+import 'package:veloxorder/data/order/source/remote/order_remote_data_source.dart';
+import 'package:veloxorder/data/order/source/local/order_local_data_source.dart';
+
 // リポジトリインターフェースと実装
 import 'package:veloxorder/domain/menu/repository/menu_repository.dart';
 import 'package:veloxorder/data/menu/repository/menu_repository_impl.dart';
@@ -77,6 +83,14 @@ Future<void> setupLocator() async {
       () => CategoryRemoteDataSource(firestore));
   getIt.registerLazySingleton<CategoryLocalDataSource>(
       () => CategoryLocalDataSource(getIt<Box<MenuCategory>>()));
+  getIt.registerLazySingleton<TransactionRemoteDataSource>(
+      () => TransactionRemoteDataSource(firestore));
+  getIt.registerLazySingleton<TransactionLocalDataSource>(
+      () => TransactionLocalDataSource(getIt<Box<Transaction>>()));
+  getIt.registerLazySingleton<OrderRemoteDataSource>(
+      () => OrderRemoteDataSource(firestore));
+  getIt.registerLazySingleton<OrderLocalDataSource>(
+      () => OrderLocalDataSource(getIt<Box<Order>>()));
 
   // アダプターの登録
   Hive.registerAdapter(MenuItemAdapter());
@@ -103,9 +117,11 @@ Future<void> setupLocator() async {
       getIt<MenuRemoteDataSource>(), getIt<MenuLocalDataSource>()));
   getIt.registerLazySingleton<CategoryRepository>(() => CategoryRepositoryImpl(
       getIt<CategoryRemoteDataSource>(), getIt<CategoryLocalDataSource>()));
-  getIt.registerLazySingleton<TransactionRepository>(
-      () => TransactionRepositoryImpl());
-  getIt.registerLazySingleton<OrderRepository>(() => OrderRepositoryImpl());
+  getIt.registerLazySingleton<TransactionRepository>(() =>
+      TransactionRepositoryImpl(getIt<TransactionRemoteDataSource>(),
+          getIt<TransactionLocalDataSource>()));
+  getIt.registerLazySingleton<OrderRepository>(() => OrderRepositoryImpl(
+      getIt<OrderRemoteDataSource>(), getIt<OrderLocalDataSource>()));
 
   // ユースケースの登録
   getIt.registerLazySingleton<GetMenuItemsUseCase>(

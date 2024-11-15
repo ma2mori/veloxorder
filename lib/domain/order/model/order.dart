@@ -5,7 +5,7 @@ part 'order.g.dart';
 @HiveType(typeId: 3)
 class Order extends HiveObject {
   @HiveField(0)
-  int id;
+  String? id;
 
   @HiveField(1)
   String voucherNumber;
@@ -17,7 +17,7 @@ class Order extends HiveObject {
   List<OrderItem> items;
 
   Order({
-    required this.id,
+    this.id,
     required this.voucherNumber,
     required this.dateTime,
     required this.items,
@@ -27,7 +27,7 @@ class Order extends HiveObject {
 @HiveType(typeId: 4)
 class OrderItem extends HiveObject {
   @HiveField(0)
-  int menuItemKey;
+  String menuItemId;
 
   @HiveField(1)
   int quantity;
@@ -36,7 +36,7 @@ class OrderItem extends HiveObject {
   OrderItemStatus status;
 
   OrderItem({
-    required this.menuItemKey,
+    required this.menuItemId,
     required this.quantity,
     this.status = OrderItemStatus.pending,
   });

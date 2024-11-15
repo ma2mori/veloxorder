@@ -1,28 +1,55 @@
 import 'package:veloxorder/domain/order/model/order.dart';
 import 'package:veloxorder/domain/order/repository/order_repository.dart';
-import 'package:hive/hive.dart';
-import 'package:veloxorder/di/locator.dart';
+import 'package:veloxorder/data/order/source/remote/order_remote_data_source.dart';
+import 'package:veloxorder/data/order/source/local/order_local_data_source.dart';
 
 class OrderRepositoryImpl implements OrderRepository {
-  final Box<Order> _orderBox = getIt<Box<Order>>();
+  final OrderRemoteDataSource _remoteDataSource;
+  final OrderLocalDataSource _localDataSource;
+
+  OrderRepositoryImpl(this._remoteDataSource, this._localDataSource);
 
   @override
   Future<List<Order>> getOrders() async {
-    return _orderBox.values.toList();
+    try {
+      // リモートからデータを取得
+      List<Order> remoteOrders = await _remoteDataSource.fetchOrders();
+
+      // ローカルに保存
+      await _localDataSource.saveOrders(remoteOrders);
+
+      return remoteOrders;
+    } catch (e) {
+      // リモートからの取得に失敗した場合、ローカルから取得
+      return await _localDataSource.getOrders();
+    }
   }
 
   @override
   Future<void> addOrder(Order order) async {
-    await _orderBox.add(order);
+    // リモートに追加
+    String id = await _remoteDataSource.addOrder(order);
+    order.id = id;
+
+    // ローカルに追加
+    await _localDataSource.addOrder(order);
   }
 
   @override
   Future<void> updateOrder(Order order) async {
-    await order.save();
+    // リモートを更新
+    await _remoteDataSource.updateOrder(order);
+
+    // ローカルを更新
+    await _localDataSource.updateOrder(order);
   }
 
   @override
   Future<void> deleteOrder(Order order) async {
-    await order.delete();
+    // リモートから削除
+    await _remoteDataSource.deleteOrder(order);
+
+    // ローカルから削除
+    await _localDataSource.deleteOrder(order);
   }
 }

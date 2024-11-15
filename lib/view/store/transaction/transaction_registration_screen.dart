@@ -288,15 +288,28 @@ class _TransactionRegistrationScreenState
     // 引換券番号を生成（例: 'V' + 取引IDの下6桁）
     String voucherNumber = 'V${transactionId % 1000000}';
 
+    // Transaction の items を作成
+    Map<String, int> transactionItems = {};
+    selectedItems.forEach((itemKey, quantity) {
+      var menuItem = Provider.of<MenuViewModel>(context, listen: false)
+          .getMenuItemByKey(itemKey);
+      if (menuItem != null && menuItem.id != null) {
+        transactionItems[menuItem.id!] = quantity;
+      } else {
+        print(
+            'Error: MenuItem not found for key $itemKey or menuItem.id is null');
+      }
+    });
+
     // 取引データを作成
     Transaction transaction = Transaction(
-      id: transactionId,
+      id: transactionId.toString(),
       dateTime: DateTime.now(),
       voucherNumber: voucherNumber,
       totalAmount: totalAmount,
       receivedAmount: receivedAmount,
       change: change,
-      items: Map.from(selectedItems),
+      items: transactionItems,
     );
 
     // 取引データを保存
@@ -306,18 +319,25 @@ class _TransactionRegistrationScreenState
     // OrderItemのリストを作成
     List<OrderItem> orderItems = [];
     selectedItems.forEach((itemKey, quantity) {
-      for (int i = 0; i < quantity; i++) {
-        orderItems.add(OrderItem(
-          menuItemKey: itemKey,
-          quantity: 1,
-          status: OrderItemStatus.pending, // 初期ステータスは未調理
-        ));
+      var menuItem = Provider.of<MenuViewModel>(context, listen: false)
+          .getMenuItemByKey(itemKey);
+      if (menuItem != null && menuItem.id != null) {
+        for (int i = 0; i < quantity; i++) {
+          orderItems.add(OrderItem(
+            menuItemId: menuItem.id!,
+            quantity: 1,
+            status: OrderItemStatus.pending, // 初期ステータスは未調理
+          ));
+        }
+      } else {
+        print(
+            'Error: MenuItem not found for key $itemKey or menuItem.id is null');
       }
     });
 
     // Orderデータを作成
     Order order = Order(
-      id: transactionId,
+      id: transactionId.toString(),
       voucherNumber: voucherNumber,
       dateTime: DateTime.now(),
       items: orderItems,
