@@ -5,7 +5,7 @@ part 'transaction.g.dart';
 @HiveType(typeId: 2)
 class Transaction extends HiveObject {
   @HiveField(0)
-  int id;
+  String? id;
 
   @HiveField(1)
   DateTime dateTime;
@@ -23,10 +23,10 @@ class Transaction extends HiveObject {
   int change;
 
   @HiveField(6)
-  Map<int, int> items;
+  Map<String, int> items;
 
   Transaction({
-    required this.id,
+    this.id,
     required this.dateTime,
     required this.voucherNumber,
     required this.totalAmount,

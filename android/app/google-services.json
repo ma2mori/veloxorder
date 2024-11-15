@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "788002160614",
+    "project_id": "veloxorder-f95e2",
+    "storage_bucket": "veloxorder-f95e2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:788002160614:android:7076765e1a291c7de0a027",
+        "android_client_info": {
+          "package_name": "com.ma2mo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8E91xkfR1hk2pc9po-D0DE1V-m1Znt1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

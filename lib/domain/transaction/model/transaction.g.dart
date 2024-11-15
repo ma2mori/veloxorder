@@ -17,13 +17,13 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Transaction(
-      id: fields[0] as int,
+      id: fields[0] as String?,
       dateTime: fields[1] as DateTime,
       voucherNumber: fields[2] as String,
       totalAmount: fields[3] as int,
       receivedAmount: fields[4] as int,
       change: fields[5] as int,
-      items: (fields[6] as Map).cast<int, int>(),
+      items: (fields[6] as Map).cast<String, int>(),
     );
   }
 

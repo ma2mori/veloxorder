@@ -7,7 +7,11 @@ class MenuCategory extends HiveObject {
   @HiveField(0)
   String category;
 
+  @HiveField(1)
+  String? id;
+
   MenuCategory({
     required this.category,
+    this.id,
   });
 }

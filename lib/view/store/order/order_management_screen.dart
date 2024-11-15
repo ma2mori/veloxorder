@@ -99,7 +99,7 @@ class _OrderManagementScreenState extends State<OrderManagementScreen>
 
             // 商品名を取得
             MenuItem? menuItem =
-                menuViewModel.getMenuItemByKey(orderItem.menuItemKey);
+                menuViewModel.getMenuItemById(orderItem.menuItemId);
             String itemName = menuItem != null ? menuItem.name : '不明な商品';
 
             // 経過時間を計算
