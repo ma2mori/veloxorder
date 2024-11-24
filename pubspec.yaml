@@ -21,6 +21,7 @@ dependencies:
   intl: ^0.18.0
   firebase_core: ^2.13.0
   cloud_firestore: ^4.9.0
+  barcode_widget: ^2.0.1
 
 dev_dependencies:
   flutter_test:
