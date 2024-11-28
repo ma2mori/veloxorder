@@ -346,9 +346,6 @@ class _TransactionRegistrationScreenState
     // Orderデータを保存
     await Provider.of<OrderViewModel>(context, listen: false).addOrder(order);
 
-    // QRコードを表示する画面に遷移（後で実装）
-    // TODO: QRコード表示画面を実装
-
     // 選択された商品をクリア
     setState(() {
       selectedItems.clear();
@@ -357,7 +354,10 @@ class _TransactionRegistrationScreenState
     // おつりを表示
     await showDialog(
       context: context,
-      builder: (context) => ChangeDisplayDialog(changeAmount: change),
+      builder: (context) => ChangeDisplayDialog(
+        changeAmount: change,
+        orderId: order.id!,
+      ),
     );
   }
 
