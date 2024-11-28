@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ChangeDisplayDialog extends StatelessWidget {
   final int changeAmount;
@@ -13,8 +14,9 @@ class ChangeDisplayDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String qrData =
-        'https://sample.app/order?orderId=$orderId'; // Todo ドメイnをenvから取得するように修正
+    final String? baseUrl = dotenv.env['BASE_URL'];
+    String qrData = '$baseUrl/#/order?orderId=$orderId';
+    print(qrData);
 
     return AlertDialog(
       title: Text('おつりと引換券'),
