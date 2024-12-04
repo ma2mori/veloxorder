@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:veloxorder/view/store/common_drawer.dart';
+import 'package:veloxorder/view/store/transaction/transaction_detail_screen.dart';
 import 'package:veloxorder/viewmodel/store/transaction/transaction_viewmodel.dart';
 import 'package:veloxorder/domain/transaction/model/transaction.dart';
 import 'package:intl/intl.dart';
@@ -30,14 +31,35 @@ class TransactionHistoryScreen extends StatelessWidget {
               Transaction transaction = transactions[index];
               String formattedDate = DateFormat('yyyy/MM/dd HH:mm:ss')
                   .format(transaction.dateTime);
+              bool isDeleted = transaction.isDeleted ?? false;
+
               return ListTile(
-                title: Text('取引ID: ${transaction.id}'),
+                title: Text(
+                  '取引ID: ${transaction.id}',
+                  style: TextStyle(
+                    color: isDeleted ? Colors.grey : Colors.black,
+                    decoration: isDeleted ? TextDecoration.lineThrough : null,
+                  ),
+                ),
                 subtitle: Text(
-                    '日時: $formattedDate\n金額: ¥${transaction.totalAmount}\n引換番号: ${transaction.voucherNumber}'),
+                  '日時: $formattedDate\n金額: ¥${transaction.totalAmount}\n引換番号: ${transaction.voucherNumber}',
+                  style: TextStyle(
+                    color: isDeleted ? Colors.grey : Colors.black,
+                    decoration: isDeleted ? TextDecoration.lineThrough : null,
+                  ),
+                ),
                 isThreeLine: true,
-                onTap: () {
-                  // TODO: 取引詳細画面へのナビゲーションを実装
-                },
+                onTap: isDeleted
+                    ? null
+                    : () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TransactionDetailScreen(
+                                transaction: transaction),
+                          ),
+                        );
+                      },
               );
             },
           );

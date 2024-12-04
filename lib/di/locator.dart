@@ -44,6 +44,7 @@ import 'package:veloxorder/domain/category/usecase/update_category_usecase.dart'
 
 import 'package:veloxorder/domain/transaction/usecase/add_transaction_usecase.dart';
 import 'package:veloxorder/domain/transaction/usecase/get_transactions_usecase.dart';
+import 'package:veloxorder/domain/transaction/usecase/update_transaction_usecase.dart';
 
 import 'package:veloxorder/domain/order/usecase/get_orders_usecase.dart';
 import 'package:veloxorder/domain/order/usecase/add_order_usecase.dart';
@@ -146,6 +147,8 @@ Future<void> setupLocator() async {
       () => GetTransactionsUseCase(getIt<TransactionRepository>()));
   getIt.registerLazySingleton<AddTransactionUseCase>(
       () => AddTransactionUseCase(getIt<TransactionRepository>()));
+  getIt.registerLazySingleton<UpdateTransactionUseCase>(
+      () => UpdateTransactionUseCase(getIt<TransactionRepository>()));
 
   getIt.registerLazySingleton<GetOrdersUseCase>(
       () => GetOrdersUseCase(getIt<OrderRepository>()));

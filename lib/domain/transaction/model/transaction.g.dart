@@ -24,13 +24,14 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
       receivedAmount: fields[4] as int,
       change: fields[5] as int,
       items: (fields[6] as Map).cast<String, int>(),
+      isDeleted: fields[7] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Transaction obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
       ..writeByte(5)
       ..write(obj.change)
       ..writeByte(6)
-      ..write(obj.items);
+      ..write(obj.items)
+      ..writeByte(7)
+      ..write(obj.isDeleted);
   }
 
   @override
