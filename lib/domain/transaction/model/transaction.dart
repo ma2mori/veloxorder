@@ -25,6 +25,9 @@ class Transaction extends HiveObject {
   @HiveField(6)
   Map<String, int> items;
 
+  @HiveField(7)
+  bool? isDeleted;
+
   Transaction({
     this.id,
     required this.dateTime,
@@ -33,5 +36,6 @@ class Transaction extends HiveObject {
     required this.receivedAmount,
     required this.change,
     required this.items,
+    this.isDeleted = false,
   });
 }

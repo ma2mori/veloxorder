@@ -35,4 +35,13 @@ class TransactionRepositoryImpl implements TransactionRepository {
     // ローカルに追加
     await _localDataSource.addTransaction(transaction);
   }
+
+  @override
+  Future<void> updateTransaction(Transaction transaction) async {
+    // リモートを更新
+    await _remoteDataSource.updateTransaction(transaction);
+
+    // ローカルを更新
+    await _localDataSource.updateTransaction(transaction);
+  }
 }

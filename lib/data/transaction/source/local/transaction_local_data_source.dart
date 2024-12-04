@@ -18,4 +18,8 @@ class TransactionLocalDataSource {
   Future<void> addTransaction(Transaction transaction) async {
     await _transactionBox.add(transaction);
   }
+
+  Future<void> updateTransaction(Transaction transaction) async {
+    await transaction.save();
+  }
 }
