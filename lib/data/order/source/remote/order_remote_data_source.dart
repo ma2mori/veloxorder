@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart' hide Order;
 import 'package:veloxorder/domain/order/model/order.dart';
+import 'package:veloxorder/domain/shared/vo/voucher_number.dart';
 
 class OrderRemoteDataSource {
   final FirebaseFirestore _firestore;
@@ -25,7 +26,7 @@ class OrderRemoteDataSource {
 
       Order order = Order(
         id: doc.id,
-        voucherNumber: data['voucherNumber'],
+        voucherNumber: VoucherNumber(data['voucherNumber']),
         dateTime: (data['dateTime'] as Timestamp).toDate(),
         items: items,
       );
@@ -45,7 +46,7 @@ class OrderRemoteDataSource {
     }).toList();
 
     DocumentReference docRef = await _firestore.collection('orders').add({
-      'voucherNumber': order.voucherNumber,
+      'voucherNumber': order.voucherNumber.value,
       'dateTime': order.dateTime,
       'items': itemsData,
     });
@@ -63,7 +64,7 @@ class OrderRemoteDataSource {
       }).toList();
 
       await _firestore.collection('orders').doc(order.id).update({
-        'voucherNumber': order.voucherNumber,
+        'voucherNumber': order.voucherNumber.value,
         'dateTime': order.dateTime,
         'items': itemsData,
       });

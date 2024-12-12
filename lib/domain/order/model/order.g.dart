@@ -18,7 +18,7 @@ class OrderAdapter extends TypeAdapter<Order> {
     };
     return Order(
       id: fields[0] as String?,
-      voucherNumber: fields[1] as String,
+      voucherNumber: fields[1] as VoucherNumber,
       dateTime: fields[2] as DateTime,
       items: (fields[3] as List).cast<OrderItem>(),
     );

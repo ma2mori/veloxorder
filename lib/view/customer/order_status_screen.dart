@@ -51,7 +51,7 @@ class _OrderStatusScreenState extends State<OrderStatusScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '引換券番号: ${viewModel.order!.voucherNumber}',
+                      '引換券番号: ${viewModel.order!.voucherNumber.value}',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

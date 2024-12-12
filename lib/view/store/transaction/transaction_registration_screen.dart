@@ -340,7 +340,7 @@ class _TransactionRegistrationScreenState
     // Orderデータを作成
     Order order = Order(
       id: transactionId.toString(),
-      voucherNumber: voucherNumber,
+      voucherNumber: VoucherNumber(voucherNumber),
       dateTime: DateTime.now(),
       items: orderItems,
     );
