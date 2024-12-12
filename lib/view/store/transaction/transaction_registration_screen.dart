@@ -133,7 +133,7 @@ class _TransactionRegistrationScreenState
                                     style: TextStyle(fontSize: 14),
                                   ),
                                   subtitle: Text(
-                                    '価格: ¥${item.price}',
+                                    '価格: ¥${item.price.value}',
                                     style: TextStyle(fontSize: 12),
                                   ),
                                   dense: true,
@@ -252,7 +252,7 @@ class _TransactionRegistrationScreenState
       var item = Provider.of<MenuViewModel>(context, listen: false)
           .getMenuItemByKey(itemKey);
       if (item != null) {
-        total += item.price * quantity;
+        total += item.price.value * quantity;
       }
     });
     return total;

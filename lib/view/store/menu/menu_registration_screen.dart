@@ -119,7 +119,7 @@ class _MenuRegistrationScreenState extends State<MenuRegistrationScreen> {
                                     style: TextStyle(fontSize: 14),
                                   ),
                                   subtitle: Text(
-                                    '価格: ¥${item.price}',
+                                    '価格: ¥${item.price.value}',
                                     style: TextStyle(fontSize: 12),
                                   ),
                                   dense: true,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
+import 'package:veloxorder/domain/shared/vo/amount.dart';
 import 'package:veloxorder/viewmodel/store/menu/menu_viewmodel.dart';
 import 'package:veloxorder/domain/category/model/menu_category.dart';
 
@@ -14,7 +15,7 @@ class EditMenuItemDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     String? itemName = item.name;
-    int? itemPrice = item.price;
+    int? itemPrice = item.price.value;
     String? itemNotes = item.notes;
 
     return AlertDialog(
@@ -81,7 +82,7 @@ class EditMenuItemDialog extends StatelessWidget {
               _formKey.currentState!.save();
               if (itemName != null && itemPrice != null) {
                 item.name = itemName!;
-                item.price = itemPrice!;
+                item.price = Amount(itemPrice!);
                 item.notes = itemNotes;
                 Provider.of<MenuViewModel>(context, listen: false)
                     .updateMenuItem(item);

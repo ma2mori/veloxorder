@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
+import 'package:veloxorder/domain/shared/vo/amount.dart';
 
 class MenuRemoteDataSource {
   final FirebaseFirestore _firestore;
@@ -16,7 +17,7 @@ class MenuRemoteDataSource {
       MenuItem item = MenuItem(
         id: doc.id,
         name: data['name'],
-        price: data['price'],
+        price: Amount(data['price']),
         categoryId: data['categoryId'],
         notes: data['notes'],
         imagePath: data['imagePath'],
@@ -30,7 +31,7 @@ class MenuRemoteDataSource {
   Future<String> addMenuItem(MenuItem item) async {
     DocumentReference docRef = await _firestore.collection('menuItems').add({
       'name': item.name,
-      'price': item.price,
+      'price': item.price.value,
       'categoryId': item.categoryId,
       'notes': item.notes,
       'imagePath': item.imagePath,
@@ -42,7 +43,7 @@ class MenuRemoteDataSource {
     if (item.id != null) {
       await _firestore.collection('menuItems').doc(item.id).update({
         'name': item.name,
-        'price': item.price,
+        'price': item.price.value,
         'categoryId': item.categoryId,
         'notes': item.notes,
         'imagePath': item.imagePath,

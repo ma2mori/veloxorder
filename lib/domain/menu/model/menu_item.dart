@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:veloxorder/domain/shared/vo/amount.dart';
 
 part 'menu_item.g.dart';
 
@@ -8,7 +9,7 @@ class MenuItem extends HiveObject {
   String name;
 
   @HiveField(1)
-  int price;
+  Amount price;
 
   @HiveField(2)
   String? imagePath;
