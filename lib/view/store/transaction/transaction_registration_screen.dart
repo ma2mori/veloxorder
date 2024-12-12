@@ -11,6 +11,8 @@ import 'package:veloxorder/domain/category/model/menu_category.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
 import 'package:veloxorder/domain/transaction/model/transaction.dart';
 import 'package:veloxorder/domain/order/model/order.dart';
+import 'package:veloxorder/domain/shared/vo/amount.dart';
+import 'package:veloxorder/domain/shared/vo/voucher_number.dart';
 
 class TransactionRegistrationScreen extends StatefulWidget {
   @override
@@ -305,10 +307,10 @@ class _TransactionRegistrationScreenState
     Transaction transaction = Transaction(
       id: transactionId.toString(),
       dateTime: DateTime.now(),
-      voucherNumber: voucherNumber,
-      totalAmount: totalAmount,
-      receivedAmount: receivedAmount,
-      change: change,
+      voucherNumber: VoucherNumber(voucherNumber),
+      totalAmount: Amount(totalAmount),
+      receivedAmount: Amount(receivedAmount),
+      change: Amount(change),
       items: transactionItems,
     );
 

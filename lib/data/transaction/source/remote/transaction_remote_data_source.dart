@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
+import 'package:veloxorder/domain/shared/vo/amount.dart';
+import 'package:veloxorder/domain/shared/vo/voucher_number.dart';
 import 'package:veloxorder/domain/transaction/model/transaction.dart';
 
 class TransactionRemoteDataSource {
@@ -16,10 +18,10 @@ class TransactionRemoteDataSource {
       Transaction transaction = Transaction(
         id: doc.id,
         dateTime: (data['dateTime'] as Timestamp).toDate(),
-        voucherNumber: data['voucherNumber'],
-        totalAmount: data['totalAmount'],
-        receivedAmount: data['receivedAmount'],
-        change: data['change'],
+        voucherNumber: VoucherNumber(data['voucherNumber']),
+        totalAmount: Amount(data['totalAmount']),
+        receivedAmount: Amount(data['receivedAmount']),
+        change: Amount(data['change']),
         items: Map<String, dynamic>.from(data['items'])
             .map((key, value) => MapEntry<String, int>(key, value)),
         isDeleted: data['isDeleted'] ?? false,
@@ -33,10 +35,10 @@ class TransactionRemoteDataSource {
   Future<String> addTransaction(Transaction transaction) async {
     DocumentReference docRef = await _firestore.collection('transactions').add({
       'dateTime': transaction.dateTime,
-      'voucherNumber': transaction.voucherNumber,
-      'totalAmount': transaction.totalAmount,
-      'receivedAmount': transaction.receivedAmount,
-      'change': transaction.change,
+      'voucherNumber': transaction.voucherNumber.value,
+      'totalAmount': transaction.totalAmount.value,
+      'receivedAmount': transaction.receivedAmount.value,
+      'change': transaction.change.value,
       'items': transaction.items,
       'isDeleted': transaction.isDeleted ?? false,
     });

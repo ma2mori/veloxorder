@@ -1,4 +1,6 @@
 import 'package:hive/hive.dart';
+import 'package:veloxorder/domain/shared/vo/amount.dart';
+import 'package:veloxorder/domain/shared/vo/voucher_number.dart';
 
 part 'transaction.g.dart';
 
@@ -11,16 +13,16 @@ class Transaction extends HiveObject {
   DateTime dateTime;
 
   @HiveField(2)
-  String voucherNumber;
+  VoucherNumber voucherNumber;
 
   @HiveField(3)
-  int totalAmount;
+  Amount totalAmount;
 
   @HiveField(4)
-  int receivedAmount;
+  Amount receivedAmount;
 
   @HiveField(5)
-  int change;
+  Amount change;
 
   @HiveField(6)
   Map<String, int> items;
