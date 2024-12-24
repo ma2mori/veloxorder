@@ -5,6 +5,7 @@ import 'package:veloxorder/domain/category/usecase/get_categories_usecase.dart';
 import 'package:veloxorder/domain/category/usecase/add_category_usecase.dart';
 import 'package:veloxorder/domain/category/usecase/update_category_usecase.dart';
 import 'package:veloxorder/domain/category/usecase/delete_category_usecase.dart';
+import 'package:veloxorder/domain/shared/vo/category_name.dart';
 
 class CategoryViewModel extends ChangeNotifier {
   final GetCategoriesUseCase _getCategoriesUseCase =
@@ -27,14 +28,14 @@ class CategoryViewModel extends ChangeNotifier {
   }
 
   Future<void> addCategory(String categoryName) async {
-    final newCategory = MenuCategory(category: categoryName);
+    final newCategory = MenuCategory(category: CategoryName(categoryName));
     await _addCategoryUseCase(newCategory);
     await fetchCategories();
   }
 
   Future<void> editCategory(
       MenuCategory category, String newCategoryName) async {
-    category.category = newCategoryName;
+    category.category = CategoryName(newCategoryName);
     await _updateCategoryUseCase(category);
     await fetchCategories();
   }

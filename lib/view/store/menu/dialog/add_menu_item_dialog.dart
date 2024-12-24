@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:veloxorder/domain/category/model/menu_category.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
+import 'package:veloxorder/domain/shared/vo/amount.dart';
 import 'package:veloxorder/viewmodel/store/menu/menu_viewmodel.dart';
 
 class AddMenuItemDialog extends StatelessWidget {
@@ -78,8 +79,8 @@ class AddMenuItemDialog extends StatelessWidget {
               if (itemName != null && itemPrice != null) {
                 final newItem = MenuItem(
                   name: itemName!,
-                  price: itemPrice!,
-                  categoryId: category.key as int,
+                  price: Amount(itemPrice!),
+                  categoryId: category.id!,
                   notes: itemNotes,
                 );
                 Provider.of<MenuViewModel>(context, listen: false)

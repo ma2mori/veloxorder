@@ -45,7 +45,7 @@ class _MenuRegistrationScreenState extends State<MenuRegistrationScreen> {
                           bool isSelected = selectedCategory == category;
                           return ListTile(
                             title: Text(
-                              category.category,
+                              category.category.value,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontSize: 14),
                             ),
@@ -80,7 +80,7 @@ class _MenuRegistrationScreenState extends State<MenuRegistrationScreen> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    '${selectedCategory!.category}',
+                                    '${selectedCategory!.category.value}',
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 18,
@@ -102,15 +102,14 @@ class _MenuRegistrationScreenState extends State<MenuRegistrationScreen> {
                             child: ListView.separated(
                               padding: EdgeInsets.symmetric(vertical: 4.0),
                               itemCount: menuViewModel
-                                  .getMenuItemsByCategory(
-                                      selectedCategory!.key as int)
+                                  .getMenuItemsByCategory(selectedCategory!.id!)
                                   .length,
                               separatorBuilder: (context, index) =>
                                   Divider(height: 1, color: Colors.grey),
                               itemBuilder: (context, index) {
                                 var items =
                                     menuViewModel.getMenuItemsByCategory(
-                                        selectedCategory!.key as int);
+                                        selectedCategory!.id!);
                                 var item = items[index];
                                 return ListTile(
                                   title: Text(
@@ -119,7 +118,7 @@ class _MenuRegistrationScreenState extends State<MenuRegistrationScreen> {
                                     style: TextStyle(fontSize: 14),
                                   ),
                                   subtitle: Text(
-                                    '価格: ¥${item.price}',
+                                    '価格: ¥${item.price.value}',
                                     style: TextStyle(fontSize: 12),
                                   ),
                                   dense: true,

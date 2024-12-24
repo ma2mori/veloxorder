@@ -19,10 +19,10 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
     return Transaction(
       id: fields[0] as String?,
       dateTime: fields[1] as DateTime,
-      voucherNumber: fields[2] as String,
-      totalAmount: fields[3] as int,
-      receivedAmount: fields[4] as int,
-      change: fields[5] as int,
+      voucherNumber: fields[2] as VoucherNumber,
+      totalAmount: fields[3] as Amount,
+      receivedAmount: fields[4] as Amount,
+      change: fields[5] as Amount,
       items: (fields[6] as Map).cast<String, int>(),
       isDeleted: fields[7] as bool?,
     );

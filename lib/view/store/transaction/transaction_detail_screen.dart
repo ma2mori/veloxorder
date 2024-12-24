@@ -33,8 +33,8 @@ class TransactionDetailScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 Text('日時: $formattedDate'),
-                Text('引換券番号: ${transaction.voucherNumber}'),
-                Text('合計金額: ¥${transaction.totalAmount}'),
+                Text('引換券番号: ${transaction.voucherNumber.value}'),
+                Text('合計金額: ¥${transaction.totalAmount.value}'),
                 SizedBox(height: 16),
                 Text(
                   '注文内容:',

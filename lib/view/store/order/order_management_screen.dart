@@ -107,7 +107,7 @@ class _OrderManagementScreenState extends State<OrderManagementScreen>
             String elapsedTimeStr = _formatDuration(elapsedTime);
 
             return ListTile(
-              title: Text('引換券番号: ${order.voucherNumber}'),
+              title: Text('引換券番号: ${order.voucherNumber.value}'),
               subtitle: Text(
                 '商品名: $itemName\n経過時間: $elapsedTimeStr',
                 style: TextStyle(

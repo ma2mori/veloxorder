@@ -11,6 +11,8 @@ import 'package:veloxorder/domain/category/model/menu_category.dart';
 import 'package:veloxorder/domain/menu/model/menu_item.dart';
 import 'package:veloxorder/domain/transaction/model/transaction.dart';
 import 'package:veloxorder/domain/order/model/order.dart';
+import 'package:veloxorder/domain/shared/vo/amount.dart';
+import 'package:veloxorder/domain/shared/vo/voucher_number.dart';
 
 class TransactionRegistrationScreen extends StatefulWidget {
   @override
@@ -56,7 +58,7 @@ class _TransactionRegistrationScreenState
                               children: [
                                 Expanded(
                                   child: Text(
-                                    category.category,
+                                    category.category.value,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(fontSize: 14),
                                   ),
@@ -103,7 +105,7 @@ class _TransactionRegistrationScreenState
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              '${selectedCategory!.category}',
+                              '${selectedCategory!.category.value}',
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 18,
@@ -115,14 +117,13 @@ class _TransactionRegistrationScreenState
                             child: ListView.separated(
                               padding: EdgeInsets.symmetric(vertical: 4.0),
                               itemCount: menuViewModel
-                                  .getMenuItemsByCategory(
-                                      selectedCategory!.key as int)
+                                  .getMenuItemsByCategory(selectedCategory!.id!)
                                   .length,
                               separatorBuilder: (context, index) =>
                                   Divider(height: 1, color: Colors.grey),
                               itemBuilder: (context, index) {
                                 var item = menuViewModel.getMenuItemsByCategory(
-                                    selectedCategory!.key as int)[index];
+                                    selectedCategory!.id!)[index];
                                 int itemQuantity = selectedItems[item.key] ?? 0;
                                 return ListTile(
                                   title: Text(
@@ -131,7 +132,7 @@ class _TransactionRegistrationScreenState
                                     style: TextStyle(fontSize: 14),
                                   ),
                                   subtitle: Text(
-                                    '価格: ¥${item.price}',
+                                    '価格: ¥${item.price.value}',
                                     style: TextStyle(fontSize: 12),
                                   ),
                                   dense: true,
@@ -250,7 +251,7 @@ class _TransactionRegistrationScreenState
       var item = Provider.of<MenuViewModel>(context, listen: false)
           .getMenuItemByKey(itemKey);
       if (item != null) {
-        total += item.price * quantity;
+        total += item.price.value * quantity;
       }
     });
     return total;
@@ -305,10 +306,10 @@ class _TransactionRegistrationScreenState
     Transaction transaction = Transaction(
       id: transactionId.toString(),
       dateTime: DateTime.now(),
-      voucherNumber: voucherNumber,
-      totalAmount: totalAmount,
-      receivedAmount: receivedAmount,
-      change: change,
+      voucherNumber: VoucherNumber(voucherNumber),
+      totalAmount: Amount(totalAmount),
+      receivedAmount: Amount(receivedAmount),
+      change: Amount(change),
       items: transactionItems,
     );
 
@@ -338,7 +339,7 @@ class _TransactionRegistrationScreenState
     // Orderデータを作成
     Order order = Order(
       id: transactionId.toString(),
-      voucherNumber: voucherNumber,
+      voucherNumber: VoucherNumber(voucherNumber),
       dateTime: DateTime.now(),
       items: orderItems,
     );

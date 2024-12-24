@@ -42,7 +42,7 @@ class TransactionHistoryScreen extends StatelessWidget {
                   ),
                 ),
                 subtitle: Text(
-                  '日時: $formattedDate\n金額: ¥${transaction.totalAmount}\n引換番号: ${transaction.voucherNumber}',
+                  '日時: $formattedDate\n金額: ¥${transaction.totalAmount.value}\n引換番号: ${transaction.voucherNumber.value}',
                   style: TextStyle(
                     color: isDeleted ? Colors.grey : Colors.black,
                     decoration: isDeleted ? TextDecoration.lineThrough : null,

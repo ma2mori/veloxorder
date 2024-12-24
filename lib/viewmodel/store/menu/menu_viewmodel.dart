@@ -26,7 +26,7 @@ class MenuViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<MenuItem> getMenuItemsByCategory(int categoryId) {
+  List<MenuItem> getMenuItemsByCategory(String categoryId) {
     return menuItems.where((item) => item.categoryId == categoryId).toList();
   }
 

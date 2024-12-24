@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:veloxorder/domain/shared/vo/voucher_number.dart';
 
 part 'order.g.dart';
 
@@ -8,7 +9,7 @@ class Order extends HiveObject {
   String? id;
 
   @HiveField(1)
-  String voucherNumber;
+  VoucherNumber voucherNumber;
 
   @HiveField(2)
   DateTime dateTime;

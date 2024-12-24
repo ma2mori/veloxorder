@@ -19,6 +19,10 @@ import 'package:veloxorder/data/order/source/remote/order_remote_data_source.dar
 import 'package:veloxorder/data/order/source/local/order_local_data_source.dart';
 
 // リポジトリインターフェースと実装
+import 'package:veloxorder/domain/shared/vo/amount.dart';
+import 'package:veloxorder/domain/shared/vo/category_name.dart';
+import 'package:veloxorder/domain/shared/vo/voucher_number.dart';
+
 import 'package:veloxorder/domain/menu/repository/menu_repository.dart';
 import 'package:veloxorder/data/menu/repository/menu_repository_impl.dart';
 
@@ -100,6 +104,9 @@ Future<void> setupLocator() async {
   Hive.registerAdapter(OrderAdapter());
   Hive.registerAdapter(OrderItemAdapter());
   Hive.registerAdapter(OrderItemStatusAdapter());
+  Hive.registerAdapter(VoucherNumberAdapter());
+  Hive.registerAdapter(AmountAdapter());
+  Hive.registerAdapter(CategoryNameAdapter());
 
   // ボックスのオープン
   final menuItemBox = await Hive.openBox<MenuItem>('menuItems');

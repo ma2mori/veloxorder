@@ -1,35 +1,32 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'menu_category.dart';
+part of 'category_name.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class MenuCategoryAdapter extends TypeAdapter<MenuCategory> {
+class CategoryNameAdapter extends TypeAdapter<CategoryName> {
   @override
-  final int typeId = 1;
+  final int typeId = 12;
 
   @override
-  MenuCategory read(BinaryReader reader) {
+  CategoryName read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return MenuCategory(
-      category: fields[0] as CategoryName,
-      id: fields[1] as String?,
+    return CategoryName(
+      fields[0] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, MenuCategory obj) {
+  void write(BinaryWriter writer, CategoryName obj) {
     writer
-      ..writeByte(2)
-      ..writeByte(0)
-      ..write(obj.category)
       ..writeByte(1)
-      ..write(obj.id);
+      ..writeByte(0)
+      ..write(obj.value);
   }
 
   @override
@@ -38,7 +35,7 @@ class MenuCategoryAdapter extends TypeAdapter<MenuCategory> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MenuCategoryAdapter &&
+      other is CategoryNameAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

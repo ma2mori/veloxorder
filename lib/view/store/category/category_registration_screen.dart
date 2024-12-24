@@ -25,7 +25,7 @@ class CategoryRegistrationScreen extends StatelessWidget {
               var category = categoryViewModel.categories[index];
               return ListTile(
                 title: Text(
-                  category.category,
+                  category.category.value,
                   style: TextStyle(fontSize: 16),
                 ),
                 trailing: Row(
