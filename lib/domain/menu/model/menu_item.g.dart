@@ -19,7 +19,7 @@ class MenuItemAdapter extends TypeAdapter<MenuItem> {
     return MenuItem(
       name: fields[0] as String,
       price: fields[1] as Amount,
-      categoryId: fields[4] as int,
+      categoryId: fields[4] as String,
       imagePath: fields[2] as String?,
       notes: fields[3] as String?,
       id: fields[5] as String?,

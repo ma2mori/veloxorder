@@ -58,7 +58,7 @@ class _TransactionRegistrationScreenState
                               children: [
                                 Expanded(
                                   child: Text(
-                                    category.category,
+                                    category.category.value,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(fontSize: 14),
                                   ),
@@ -105,7 +105,7 @@ class _TransactionRegistrationScreenState
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              '${selectedCategory!.category}',
+                              '${selectedCategory!.category.value}',
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 18,
@@ -117,14 +117,13 @@ class _TransactionRegistrationScreenState
                             child: ListView.separated(
                               padding: EdgeInsets.symmetric(vertical: 4.0),
                               itemCount: menuViewModel
-                                  .getMenuItemsByCategory(
-                                      selectedCategory!.key as int)
+                                  .getMenuItemsByCategory(selectedCategory!.id!)
                                   .length,
                               separatorBuilder: (context, index) =>
                                   Divider(height: 1, color: Colors.grey),
                               itemBuilder: (context, index) {
                                 var item = menuViewModel.getMenuItemsByCategory(
-                                    selectedCategory!.key as int)[index];
+                                    selectedCategory!.id!)[index];
                                 int itemQuantity = selectedItems[item.key] ?? 0;
                                 return ListTile(
                                   title: Text(

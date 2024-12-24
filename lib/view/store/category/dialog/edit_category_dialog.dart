@@ -11,14 +11,14 @@ class EditCategoryDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    String? newCategoryName = category.category;
+    String? newCategoryName = category.category.value;
 
     return AlertDialog(
       title: Text('カテゴリー編集'),
       content: Form(
         key: _formKey,
         child: TextFormField(
-          initialValue: category.category,
+          initialValue: category.category.value,
           decoration: InputDecoration(labelText: 'カテゴリー名'),
           validator: (value) {
             if (value == null || value.isEmpty) {
@@ -44,7 +44,7 @@ class EditCategoryDialog extends StatelessWidget {
             if (_formKey.currentState!.validate()) {
               _formKey.currentState!.save();
               if (newCategoryName != null &&
-                  newCategoryName != category.category) {
+                  newCategoryName != category.category.value) {
                 Provider.of<CategoryViewModel>(context, listen: false)
                     .editCategory(category, newCategoryName!);
               }

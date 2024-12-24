@@ -13,7 +13,7 @@ class DeleteCategoryDialog extends StatelessWidget {
     return AlertDialog(
       title: Text('カテゴリー削除'),
       content: Text(
-          '「${category.category}」を削除しますか？\n※カテゴリーにメニューアイテムが存在する場合は削除できません。'),
+          '「${category.category.value}」を削除しますか？\n※カテゴリーにメニューアイテムが存在する場合は削除できません。'),
       actions: <Widget>[
         TextButton(
           child: Text('キャンセル'),

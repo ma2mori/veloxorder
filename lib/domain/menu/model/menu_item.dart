@@ -18,7 +18,7 @@ class MenuItem extends HiveObject {
   String? notes;
 
   @HiveField(4)
-  int categoryId;
+  String categoryId;
 
   @HiveField(5)
   String? id;
